@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "eslint-config-custom": "*",
     "typescript": "^5.0.2",
     "tsconfig": "*",
     "vite": "^4.4.5",
