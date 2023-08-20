@@ -9,10 +9,9 @@
   "devDependencies": {
     "@turbo/gen": "^1.9.7",
     "eslint": "^8.47.0",
-    "eslint-config-custom": "*",
     "next": "^13.4.19",
     "prettier": "^3.0.2",
-    "tsconfig": "*",
+    "prettier-plugin-custom": "*",
     "turbo": "latest"
   },
   "name": "function-junctions",
