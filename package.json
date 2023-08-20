@@ -8,16 +8,17 @@
   },
   "devDependencies": {
     "@turbo/gen": "^1.9.7",
-    "eslint": "^7.32.0",
+    "eslint": "^8.47.0",
     "eslint-config-custom": "*",
     "next": "^13.4.19",
-    "prettier": "^2.5.1",
+    "prettier": "^3.0.2",
+    "tsconfig": "*",
     "turbo": "latest"
   },
   "name": "function-junctions",
   "packageManager": "yarn@1.22.19",
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/**/**"
   ]
 }
