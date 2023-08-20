@@ -8,7 +8,14 @@ module.exports = {
     'prettier'
   ],
   plugins: ['@typescript-eslint', 'import', 'prettier'],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.js', 'node_modules'],
+  ignorePatterns: [
+    'dist',
+    'node_modules',
+    '.eslintrc.cjs',
+    '.prettierrc.cjs',
+    'vite.config.ts',
+    'svelte.config.js',
+  ],
   parser: '@typescript-eslint/parser',
   rules: {
     'prettier/prettier': 'error',
