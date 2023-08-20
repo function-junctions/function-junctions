@@ -1,3 +1,0 @@
-const eee = () => {
-  console.log("")
-}

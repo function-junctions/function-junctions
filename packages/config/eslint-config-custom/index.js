@@ -3,6 +3,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'airbnb-base',
     'airbnb-typescript/base',
     'turbo',
     'prettier'
@@ -19,5 +20,6 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   rules: {
     'prettier/prettier': 'error',
+    'react/jsx-filename-extension': 0,
   },
 };
