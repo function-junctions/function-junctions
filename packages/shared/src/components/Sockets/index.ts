@@ -8,6 +8,11 @@ type InputSocketOptions = {
   connection?: InputSocketConnection;
 };
 
+type OutputSocketOptions<T> = {
+  type: string;
+  value: T;
+};
+
 type InputSocket<T> = InputSocketOptions & {
   value: T;
 };
@@ -19,6 +24,7 @@ type Tree = {
       outputs: Record<
         string,
         {
+          type: string;
           value: string;
         }
       >;
@@ -31,6 +37,7 @@ const tree: Tree = {
     test: {
       outputs: {
         test: {
+          type: 'string',
           value: 'hello!',
         },
       },
@@ -38,6 +45,7 @@ const tree: Tree = {
     test1: {
       outputs: {
         test: {
+          type: 'string',
           value: 'hello again!',
         },
       },
@@ -68,17 +76,24 @@ const inputSocketConnection = (
   );
 
 const inputSocketDispatch = <T>(
-  proxiedValue: { value: T },
+  proxiedValue: { value?: T },
+  type: string,
   connection: InputSocketConnection,
 ) => {
   const { nodeId, outputId } = connection;
 
   const outputValue = tree.nodes[nodeId]?.outputs?.[outputId];
 
-  if (outputValue) proxiedValue.value = outputValue;
+  if (outputValue) {
+    if (outputValue.type === type) {
+      proxiedValue.value = outputValue;
+      return;
+    }
+    throw new Error('Types do not match!');
+  }
 };
 
-const createInputSocketValue = <T>(value?: T) =>
+const createSocketValue = <T>(value?: T) =>
   new Proxy<{ value?: T }>(
     { value },
     {
@@ -88,13 +103,13 @@ const createInputSocketValue = <T>(value?: T) =>
     },
   );
 
-const createInputConnection = (options: InputSocketOptions) => {
+const createInput = (options: InputSocketOptions) => {
   if (!options.connection) return options;
 
-  const value = createInputSocketValue();
+  const value = createSocketValue();
 
   const connection = inputSocketConnection((dispatch) =>
-    inputSocketDispatch(value, dispatch),
+    inputSocketDispatch(value, options.type, dispatch),
   );
 
   Object.assign(connection, options.connection);
@@ -106,12 +121,26 @@ const createInputConnection = (options: InputSocketOptions) => {
   };
 };
 
-const input = createInputConnection({
+const createOutput = <T>(options: OutputSocketOptions<T>) => {
+  const value = createSocketValue(options.value);
+
+  return {
+    value,
+    type: options.type,
+  };
+};
+
+const input = createInput({
   type: 'string',
   connection: {
     nodeId: 'test',
     outputId: 'test',
   },
+});
+
+const output = createOutput({
+  type: 'string',
+  value: 'herro!',
 });
 
 console.log(input);
