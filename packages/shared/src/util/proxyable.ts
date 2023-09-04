@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { isNil, set } from 'lodash';
 
 type PropertyChangeEvent<T> = (oldValue: T, newValue: T) => void;
 type PropertyReadEvent<T> = (value: T) => T;
@@ -70,10 +70,10 @@ export default class Proxyable<T extends Record<string, unknown>> {
     if (!(key in obj)) return false;
 
     const oldValue = obj[key];
-    _.set(obj, key, newValue);
+    set(obj, key, newValue);
 
     const event = this.ChangeEvents.get(key.toString());
-    if (!_.isNil(event)) event(oldValue, newValue);
+    if (!isNil(event)) event(oldValue, newValue);
 
     return true;
   }
@@ -87,7 +87,7 @@ export default class Proxyable<T extends Record<string, unknown>> {
     if (!(key in obj)) return undefined;
 
     const event = this.ReadEvents.get(key.toString());
-    if (!_.isNil(event)) return event(obj[key]);
+    if (!isNil(event)) return event(obj[key]);
 
     return obj[key];
   }
