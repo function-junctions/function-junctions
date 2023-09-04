@@ -82,7 +82,7 @@ export default class Proxyable<T extends Record<string, unknown>> {
    * If a read event exists for the property, it will be called and the result returned.
    * Otherwise, the value of the property will be returned.
    */
-  private proxyGet = (obj: T, key: keyof T): unknown => {
+  private proxyGet = (obj: T, key: keyof T): T[keyof T] | undefined => {
     if (!(key in obj)) return undefined;
 
     const event = this.ReadEvents.get(key.toString());
