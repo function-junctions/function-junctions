@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite';
 import path from 'node:path';
 import dts from 'vite-plugin-dts';
@@ -16,5 +17,8 @@ export default defineConfig({
       formats: ['es', 'umd'],
       fileName: (format) => `shared.${format}.js`,
     },
+  },
+  test: {
+    include: ['**/__tests__/*.test.ts?(x)'],
   },
 });
