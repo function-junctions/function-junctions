@@ -19,7 +19,11 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   rules: {
-    'prettier/prettier': 'error',
+    'prettier/prettier': [
+      'error',
+      { endOfLine: 'auto' }
+    ],
+    '@typescript-eslint/lines-between-class-members': 0,
     'react/jsx-filename-extension': 0,
   },
 };
