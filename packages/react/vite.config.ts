@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'node:path';
+import path, { resolve } from 'node:path';
 import dts from 'vite-plugin-dts';
 
 // https://vitejs.dev/config/
@@ -17,6 +17,11 @@ export default defineConfig({
       name: '@function-junctions/react',
       formats: ['es', 'umd'],
       fileName: (format) => `react.${format}.js`,
+    },
+  },
+  resolve: {
+    alias: {
+      '@': resolve(resolve(), './src'),
     },
   },
 });

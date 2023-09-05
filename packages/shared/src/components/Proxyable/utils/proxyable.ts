@@ -23,7 +23,7 @@ export default class Proxyable<T extends Record<string, unknown>> {
    * @param key The key to set the event for.
    * @param event The event to trigger when the property is changed.
    */
-  public onPropertyChange = <TKey extends keyof T>(
+  public onPropertyChange = <TKey extends Extract<keyof T, string>>(
     key: TKey,
     event: PropertyChangeEvent<T[TKey]>,
   ): Proxyable<T> => {
@@ -39,14 +39,11 @@ export default class Proxyable<T extends Record<string, unknown>> {
    * @param key The key to set the event for.
    * @param event The event to trigger when the property is read.
    */
-  public onPropertyRead = <TKey extends keyof T>(
+  public onPropertyRead = <TKey extends Extract<keyof T, string>>(
     key: TKey,
     event: PropertyReadEvent<T[TKey]>,
   ): Proxyable<T> => {
-    this.ReadEvents.set(
-      key.toString(),
-      event as unknown as PropertyReadEvent<T[keyof T]>,
-    );
+    this.ReadEvents.set(key, event as unknown as PropertyReadEvent<T[keyof T]>);
     return this;
   };
 
@@ -56,22 +53,26 @@ export default class Proxyable<T extends Record<string, unknown>> {
    */
   public create = (): T =>
     new Proxy(this.ProxyObj, {
-      set: (obj, key, newValue) =>
-        this.proxySet(obj, key as keyof T, newValue as T[keyof T]),
-      get: (obj, key) => this.proxyGet(obj, key as keyof T),
+      set: (obj, key: Extract<keyof T, string>, newValue: T[keyof T]) =>
+        this.proxySet(obj, key, newValue),
+      get: (obj, key: Extract<keyof T, string>) => this.proxyGet(obj, key),
     });
 
   /**
    * The proxy set handler.
    * Sets the value of the property on the object and triggers the change event if it exists.
    */
-  private proxySet = (obj: T, key: keyof T, newValue: T[keyof T]): boolean => {
+  private proxySet = (
+    obj: T,
+    key: Extract<keyof T, string>,
+    newValue: T[keyof T],
+  ): boolean => {
     if (!(key in obj)) return false;
 
     const oldValue = obj[key];
     set(obj, key, newValue);
 
-    const event = this.ChangeEvents.get(key.toString());
+    const event = this.ChangeEvents.get(key);
     if (!isNil(event)) event(oldValue, newValue);
 
     return true;

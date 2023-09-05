@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import Proxyable from '../proxyable';
+import Proxyable from './proxyable';
 
 type TestShallowObj = {
   field1: string;
