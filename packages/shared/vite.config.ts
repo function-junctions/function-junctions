@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
 import { defineConfig } from 'vite';
-import path from 'node:path';
+import path, { resolve } from 'node:path';
 import dts from 'vite-plugin-dts';
 
 // https://vitejs.dev/config/
@@ -18,7 +18,12 @@ export default defineConfig({
       fileName: (format) => `shared.${format}.js`,
     },
   },
+  resolve: {
+    alias: {
+      '@': resolve(resolve(), './src'),
+    },
+  },
   test: {
-    include: ['**/__tests__/*.test.ts?(x)'],
+    include: ['**/*.test.ts?(x)'],
   },
 });

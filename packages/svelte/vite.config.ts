@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
-import path from 'node:path';
+import path, { resolve } from 'node:path';
 import dts from 'vite-plugin-dts';
 
 // https://vitejs.dev/config/
@@ -17,6 +17,11 @@ export default defineConfig({
       name: '@function-junctions/svelte',
       formats: ['es', 'umd'],
       fileName: (format) => `svelte.${format}.js`,
+    },
+  },
+  resolve: {
+    alias: {
+      '@': resolve(resolve(), './src'),
     },
   },
 });

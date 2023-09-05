@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import path from 'node:path';
+import path, { resolve } from 'node:path';
 import dts from 'vite-plugin-dts';
 
 // https://vitejs.dev/config/
@@ -15,6 +15,11 @@ export default defineConfig({
       name: '@function-junctions/vanilla',
       formats: ['es', 'umd'],
       fileName: (format) => `vanilla.${format}.js`,
+    },
+  },
+  resolve: {
+    alias: {
+      '@': resolve(resolve(), './src'),
     },
   },
 });
