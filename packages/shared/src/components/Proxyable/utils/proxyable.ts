@@ -1,7 +1,7 @@
 import { isNil, set } from 'lodash';
 
-type PropertyChangeEvent<T> = (oldValue: T, newValue: T) => void;
-type PropertyReadEvent<T> = (value: T) => T;
+export type PropertyChangeEvent<T> = (oldValue: T, newValue: T) => void;
+export type PropertyReadEvent<T> = (value: T) => T;
 
 /**
  * @class
@@ -27,10 +27,7 @@ export default class Proxyable<T extends Record<string, unknown>> {
     key: TKey,
     event: PropertyChangeEvent<T[TKey]>,
   ): Proxyable<T> => {
-    this.ChangeEvents.set(
-      key.toString(),
-      event as PropertyChangeEvent<T[keyof T]>,
-    );
+    this.ChangeEvents.set(key, event as PropertyChangeEvent<T[keyof T]>);
     return this;
   };
 

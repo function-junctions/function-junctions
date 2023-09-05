@@ -25,5 +25,6 @@ module.exports = {
     ],
     '@typescript-eslint/lines-between-class-members': 0,
     'react/jsx-filename-extension': 0,
+    'import/extensions': 0,
   },
 };
