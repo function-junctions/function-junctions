@@ -6,16 +6,16 @@ export const initialTree = {
 };
 
 export default class Tree {
-  public tree: StatefulTree;
+  public value: StatefulTree;
 
   constructor() {
     const builder = new TreeBuilder(initialTree);
 
-    this.tree = builder.create().tree;
+    this.value = builder.create().tree;
   }
 
   public serialize = (): string => {
-    const { nodes } = this.tree;
+    const { nodes } = this.value;
 
     return JSON.stringify({
       nodes: serializeNodes(nodes),
