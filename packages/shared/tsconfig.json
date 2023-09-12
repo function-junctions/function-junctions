@@ -1,4 +1,10 @@
 {
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+  },
   "extends": "tsconfig/library.json",
   "include": ["src"],
 }
