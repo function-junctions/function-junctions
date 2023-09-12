@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import Output, { type OutputParams } from './Output';
+import Output, { type OutputParams } from './OutputBuilder';
 
 const outputParams: OutputParams<string> = {
   type: 'test',

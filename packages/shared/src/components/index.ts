@@ -1,5 +1,5 @@
 export {
-  Proxyable,
+  Builder,
   type PropertyChangeEvent,
   type PropertyReadEvent,
-} from './Proxyable';
+} from './Builder';

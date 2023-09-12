@@ -1,4 +1,4 @@
-import { Proxyable } from '@/components';
+import { Builder } from '@/components';
 
 export type InputConnection = {
   outputId: string;
@@ -14,7 +14,9 @@ export type InputSocket<T> = InputParams & {
   value?: T;
 };
 
-export default class Input<T = unknown> extends Proxyable<InputSocket<T>> {
+export type SerializedInputSocket = InputParams;
+
+export default class InputBuilder<T = unknown> extends Builder<InputSocket<T>> {
   constructor(params: InputParams) {
     const { connection, type } = params;
     const value: T | undefined = undefined;

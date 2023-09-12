@@ -1,5 +1,5 @@
 export {
-  default as Proxyable,
+  Builder,
   type PropertyChangeEvent,
   type PropertyReadEvent,
-} from './Proxyable';
+} from './utils';

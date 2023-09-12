@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import Proxyable from './Proxyable';
+import Builder from './Builder';
 
 type TestShallowObj = {
   field1: string;
@@ -21,14 +21,14 @@ const testNestedObj: TestNestedObj = {
   },
 };
 
-describe('Proxyable', () => {
+describe('Builder', () => {
   test('should proxy a shallow object', () => {
     const proxyChanges: [string, string][] = [];
-    const proxyable = new Proxyable(testObj).onPropertyChange(
+    const builder = new Builder(testObj).onPropertyChange(
       'field1',
       (oldValue, newValue) => proxyChanges.push([oldValue, newValue]),
     );
-    const proxyObj = proxyable.create();
+    const proxyObj = builder.create();
 
     const oldValue = testObj.field1;
     const newValue = 'test2';
@@ -41,17 +41,16 @@ describe('Proxyable', () => {
     const proxyChanges: [string, string][] = [];
     const nestedProxyChanges: [string, string][] = [];
 
-    const nestedProxyable = new Proxyable(
-      testNestedObj.nested,
-    ).onPropertyChange('field1', (oldValue, newValue) =>
-      nestedProxyChanges.push([oldValue, newValue]),
+    const nestedBuilder = new Builder(testNestedObj.nested).onPropertyChange(
+      'field1',
+      (oldValue, newValue) => nestedProxyChanges.push([oldValue, newValue]),
     );
-    const proxyable = new Proxyable(testNestedObj)
+    const builder = new Builder(testNestedObj)
       .onPropertyChange('field2', (oldValue, newValue) =>
         proxyChanges.push([oldValue, newValue]),
       )
-      .onPropertyRead('nested', () => nestedProxyable.create());
-    const proxyObj = proxyable.create();
+      .onPropertyRead('nested', () => nestedBuilder.create());
+    const proxyObj = builder.create();
 
     const oldValue = testNestedObj.field2;
     const newValue = 'testNewValue';

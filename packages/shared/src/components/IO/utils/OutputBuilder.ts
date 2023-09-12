@@ -1,4 +1,4 @@
-import { Proxyable } from '@/components';
+import { Builder } from '@/components';
 
 export type OutputParams<T> = {
   type: string;
@@ -7,7 +7,11 @@ export type OutputParams<T> = {
 
 export type OutputSocket<T> = OutputParams<T>;
 
-export default class Output<T = unknown> extends Proxyable<OutputSocket<T>> {
+export type SerializedOutputSocket = { type: string };
+
+export default class OutputBuilder<T = unknown> extends Builder<
+  OutputSocket<T>
+> {
   constructor(params: OutputParams<T>) {
     const { type, value } = params;
 

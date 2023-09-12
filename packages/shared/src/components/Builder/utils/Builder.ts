@@ -7,7 +7,7 @@ export type PropertyReadEvent<T> = (value: T) => T;
  * @class
  * A class that creates proxies for objects.
  */
-export default class Proxyable<T extends Record<string, unknown>> {
+export default class Builder<T extends Record<string, unknown>> {
   private readonly ProxyObj: T;
   private readonly ChangeEvents: Map<string, PropertyChangeEvent<T[keyof T]>> =
     new Map();
@@ -26,7 +26,7 @@ export default class Proxyable<T extends Record<string, unknown>> {
   public onPropertyChange = <TKey extends Extract<keyof T, string>>(
     key: TKey,
     event: PropertyChangeEvent<T[TKey]>,
-  ): Proxyable<T> => {
+  ): Builder<T> => {
     this.ChangeEvents.set(key, event as PropertyChangeEvent<T[keyof T]>);
     return this;
   };
@@ -39,7 +39,7 @@ export default class Proxyable<T extends Record<string, unknown>> {
   public onPropertyRead = <TKey extends Extract<keyof T, string>>(
     key: TKey,
     event: PropertyReadEvent<T[TKey]>,
-  ): Proxyable<T> => {
+  ): Builder<T> => {
     this.ReadEvents.set(key, event as unknown as PropertyReadEvent<T[keyof T]>);
     return this;
   };
