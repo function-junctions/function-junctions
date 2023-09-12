@@ -8,7 +8,9 @@ const outputParams: OutputParams<string> = {
 
 describe('Output', () => {
   test('should update value at runtime', () => {
-    const output = new Output(outputParams);
+    const outputProxy = new Output(outputParams);
+
+    const output = outputProxy.create();
 
     const newValue = 'test2';
 
