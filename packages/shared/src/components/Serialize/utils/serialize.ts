@@ -34,7 +34,7 @@ export const serializeNodeOutput = (
   type: output.type,
 });
 
-export const serializeNode = (node: StatefulNode) => {
+export const serializeNode = (node: StatefulNode): SerializedNode => {
   const inputs = keys(node.inputs).reduce((prevInputs, input) => {
     const serializedInput = serializeNodeInput(node.inputs[input]);
     return {

@@ -10,7 +10,7 @@ export type InputConnection = {
 
 /** The type of options for input socket. */
 export type InputSocketOptions = {
-  connection: InputConnection;
+  connection?: InputConnection;
 };
 
 /** The type of the required fields for an input socket. */
@@ -40,10 +40,8 @@ export type InputSocketParams = InputSocketRequired &
  * @extends Builder<InputSocket<T>>
  */
 export default class InputBuilder<T = unknown> extends Builder<InputSocket<T>> {
-  constructor(params: InputSocketParams) {
-    const { connection: conn, type } = params;
-    const connection: InputConnection = conn ?? { nodeId: '', outputId: '' };
-    const value: T | undefined = undefined;
+  constructor(params: InputSocket<T>) {
+    const { connection, type, value } = params;
 
     super({ type, connection, value });
   }

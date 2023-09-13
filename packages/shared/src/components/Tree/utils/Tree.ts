@@ -1,7 +1,7 @@
 import TreeBuilder, { StatefulTree } from './TreeBuilder';
 import { serializeNodes } from '@/components/Serialize';
 
-export const initialTree = {
+const initialTree = {
   nodes: {},
 };
 
