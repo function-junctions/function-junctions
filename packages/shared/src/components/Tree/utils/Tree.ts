@@ -11,7 +11,7 @@ export default class Tree {
   constructor() {
     const builder = new TreeBuilder(initialTree);
 
-    this.value = builder.create().tree;
+    this.value = builder.value.tree;
   }
 
   public serialize = (): string => {

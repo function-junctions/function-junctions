@@ -1,92 +1,103 @@
-import { isNil, set } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
+import isNil from 'lodash/isNil';
 
-export type PropertyChangeEvent<T> = (oldValue: T, newValue: T) => void;
-export type PropertyReadEvent<T> = (value: T) => T;
+type NestedRecord<T> = {
+  [key: string]: T extends object ? NestedRecord<T[keyof T]> | T : T;
+};
 
-/**
- * A builder class that creates proxies for objects.
- * This class can be extended to create builders for specific types to proxy.
- * @class
- */
-export default class Builder<T extends Record<string, unknown>> {
-  private readonly proxyObj: T;
-  private readonly changeEvents: Map<string, PropertyChangeEvent<T[keyof T]>> =
-    new Map();
-  private readonly readEvents: Map<string, PropertyReadEvent<T[keyof T]>> =
+export default class Builder<T extends NestedRecord<unknown>> {
+  public value: T;
+  public prevValue: T | undefined = undefined;
+
+  private globalListeners: Array<(current: T, previous: T) => void> = [];
+  private listeners: Map<string, Array<(value: T, prevValue: T) => void>> =
     new Map();
 
-  constructor(obj: T) {
-    this.proxyObj = obj;
+  constructor(initialState: T) {
+    this.value = this.deepProxy(initialState);
   }
 
-  /**
-   * Sets a property change event for a given key on the object.
-   * @param key The key to set the event for.
-   * @param event The event to trigger when the property is changed.
-   */
-  public onPropertyChange = <TKey extends Extract<keyof T, string>>(
-    key: TKey,
-    event: PropertyChangeEvent<T[TKey]>,
-  ): Builder<T> => {
-    this.changeEvents.set(key, event as PropertyChangeEvent<T[keyof T]>);
-    return this;
-  };
-
-  /**
-   * Sets a property read event for a given key on the object.
-   * @param key The key to set the event for.
-   * @param event The event to trigger when the property is read.
-   */
-  public onPropertyRead = <TKey extends Extract<keyof T, string>>(
-    key: TKey,
-    event: PropertyReadEvent<T[TKey]>,
-  ): Builder<T> => {
-    this.readEvents.set(key, event as unknown as PropertyReadEvent<T[keyof T]>);
-    return this;
-  };
-
-  /**
-   * Creates a proxy for the object with the registered events.
-   * @returns The proxied object.
-   */
-  public create = (): T =>
-    new Proxy(this.proxyObj, {
-      set: (obj, key: Extract<keyof T, string>, newValue: T[keyof T]) =>
-        this.proxySet(obj, key, newValue),
-      get: (obj, key: Extract<keyof T, string>) => this.proxyGet(obj, key),
+  private deepProxy(obj: T, path = ''): T {
+    return new Proxy(obj, {
+      get: (target: T, prop: string) => {
+        const value = target[prop] as T;
+        const newPath = path ? `${path}.${prop}` : prop;
+        if (typeof value === 'object' && !isNil(value)) {
+          return this.deepProxy(value, newPath);
+        }
+        return value;
+      },
+      set: (target: T, prop: string, value: T[keyof T]) => {
+        this.prevValue = cloneDeep(this.value);
+        const affectedPaths = this.computeAffectedPaths(
+          path ? `${path}.${prop}` : prop,
+        );
+        // eslint-disable-next-line no-param-reassign
+        (target as Record<string, unknown>)[prop] = value;
+        this.notifyListeners(affectedPaths);
+        return true;
+      },
     });
+  }
 
-  /**
-   * The proxy set handler.
-   * Sets the value of the property on the object and triggers the change event if it exists.
-   */
-  private proxySet = (
-    obj: T,
-    key: Extract<keyof T, string>,
-    newValue: T[keyof T],
-  ): boolean => {
-    if (!(key in obj)) return false;
+  private computeAffectedPaths(fullPath: string): string[] {
+    return fullPath
+      .split('.')
+      .map((_, i, arr) => arr.slice(0, i + 1).join('.'));
+  }
 
-    const oldValue = obj[key];
-    set(obj, key, newValue);
+  public subscribe(listener: (current: T, previous: T) => void): () => void {
+    this.globalListeners.push(listener);
+    return () => {
+      const index = this.globalListeners.indexOf(listener);
+      if (index >= 0) {
+        this.globalListeners.splice(index, 1);
+      }
+    };
+  }
 
-    const event = this.changeEvents.get(key);
-    if (!isNil(event)) event(oldValue, newValue);
+  public subscribeToPath(
+    path: string,
+    listener: (value: T, prevValue: T) => void,
+  ): () => void {
+    if (!this.listeners.has(path)) {
+      this.listeners.set(path, []);
+    }
 
-    return true;
-  };
+    this.listeners.get(path)?.push(listener);
 
-  /**
-   * The proxy get handler.
-   * If a read event exists for the property, it will be called and the result returned.
-   * Otherwise, the value of the property will be returned.
-   */
-  private proxyGet = (obj: T, key: keyof T): T[keyof T] | undefined => {
-    if (!(key in obj)) return undefined;
+    return () => {
+      const pathListeners = this.listeners.get(path);
+      const index = pathListeners?.indexOf(listener) ?? -1;
+      if (index >= 0) {
+        pathListeners!.splice(index, 1);
+      }
+    };
+  }
 
-    const event = this.readEvents.get(key.toString());
-    if (!isNil(event)) return event(obj[key]);
+  private notifyListeners(affectedPaths: string[]): void {
+    this.globalListeners.forEach((listener) =>
+      listener(this.value, this.prevValue as T),
+    );
+    affectedPaths.forEach((path) => {
+      const pathListeners = this.listeners.get(path);
+      if (pathListeners) {
+        const currentValue = this.getValueAtPath(this.value, path);
+        const previousValue = this.getValueAtPath(this.prevValue as T, path);
 
-    return obj[key];
-  };
+        pathListeners.forEach((listener) =>
+          listener(currentValue, previousValue),
+        );
+      }
+    });
+  }
+
+  private getValueAtPath(obj: T, path: string): T {
+    return path
+      .split('.')
+      .reduce(
+        (acc: unknown, part: string) => (acc && (acc as T)[part]) || undefined,
+        obj,
+      ) as T;
+  }
 }

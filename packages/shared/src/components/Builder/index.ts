@@ -1,5 +1,2 @@
-export {
-  Builder,
-  type PropertyChangeEvent,
-  type PropertyReadEvent,
-} from './utils';
+// eslint-disable-next-line import/prefer-default-export
+export { Builder } from './utils';
