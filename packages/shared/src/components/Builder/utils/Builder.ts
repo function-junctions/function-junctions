@@ -4,18 +4,19 @@ export type PropertyChangeEvent<T> = (oldValue: T, newValue: T) => void;
 export type PropertyReadEvent<T> = (value: T) => T;
 
 /**
+ * A builder class that creates proxies for objects.
+ * This class can be extended to create builders for specific types to proxy.
  * @class
- * A class that creates proxies for objects.
  */
 export default class Builder<T extends Record<string, unknown>> {
-  private readonly ProxyObj: T;
-  private readonly ChangeEvents: Map<string, PropertyChangeEvent<T[keyof T]>> =
+  private readonly proxyObj: T;
+  private readonly changeEvents: Map<string, PropertyChangeEvent<T[keyof T]>> =
     new Map();
-  private readonly ReadEvents: Map<string, PropertyReadEvent<T[keyof T]>> =
+  private readonly readEvents: Map<string, PropertyReadEvent<T[keyof T]>> =
     new Map();
 
   constructor(obj: T) {
-    this.ProxyObj = obj;
+    this.proxyObj = obj;
   }
 
   /**
@@ -27,7 +28,7 @@ export default class Builder<T extends Record<string, unknown>> {
     key: TKey,
     event: PropertyChangeEvent<T[TKey]>,
   ): Builder<T> => {
-    this.ChangeEvents.set(key, event as PropertyChangeEvent<T[keyof T]>);
+    this.changeEvents.set(key, event as PropertyChangeEvent<T[keyof T]>);
     return this;
   };
 
@@ -40,7 +41,7 @@ export default class Builder<T extends Record<string, unknown>> {
     key: TKey,
     event: PropertyReadEvent<T[TKey]>,
   ): Builder<T> => {
-    this.ReadEvents.set(key, event as unknown as PropertyReadEvent<T[keyof T]>);
+    this.readEvents.set(key, event as unknown as PropertyReadEvent<T[keyof T]>);
     return this;
   };
 
@@ -49,7 +50,7 @@ export default class Builder<T extends Record<string, unknown>> {
    * @returns The proxied object.
    */
   public create = (): T =>
-    new Proxy(this.ProxyObj, {
+    new Proxy(this.proxyObj, {
       set: (obj, key: Extract<keyof T, string>, newValue: T[keyof T]) =>
         this.proxySet(obj, key, newValue),
       get: (obj, key: Extract<keyof T, string>) => this.proxyGet(obj, key),
@@ -69,7 +70,7 @@ export default class Builder<T extends Record<string, unknown>> {
     const oldValue = obj[key];
     set(obj, key, newValue);
 
-    const event = this.ChangeEvents.get(key);
+    const event = this.changeEvents.get(key);
     if (!isNil(event)) event(oldValue, newValue);
 
     return true;
@@ -83,7 +84,7 @@ export default class Builder<T extends Record<string, unknown>> {
   private proxyGet = (obj: T, key: keyof T): T[keyof T] | undefined => {
     if (!(key in obj)) return undefined;
 
-    const event = this.ReadEvents.get(key.toString());
+    const event = this.readEvents.get(key.toString());
     if (!isNil(event)) return event(obj[key]);
 
     return obj[key];
