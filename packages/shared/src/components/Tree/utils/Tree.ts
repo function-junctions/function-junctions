@@ -8,8 +8,8 @@ const initialTree = {
 export default class Tree {
   public value: StatefulTree;
 
-  constructor() {
-    const builder = new TreeBuilder(initialTree);
+  constructor(tree?: StatefulTree) {
+    const builder = new TreeBuilder(tree ?? initialTree);
 
     this.value = builder.value.tree;
   }

@@ -1,15 +1,18 @@
 import { StatefulTree } from '@/components/Tree';
-import { InputBuilder, InputSocketParams } from '.';
+import {
+  InputBuilder,
+  InputConnection,
+  InputSocket,
+  InputSocketParams,
+} from '.';
 
 export default class Input<T = unknown> {
+  public value: InputSocket<T>;
+
   constructor(params: InputSocketParams, tree: StatefulTree) {
     const { type, connection: defaultConnection } = params;
 
-    const value: T | undefined = defaultConnection
-      ? (tree.nodes?.[defaultConnection.nodeId]?.outputs?.[
-          defaultConnection.outputId
-        ].value as T)
-      : undefined;
+    const value: T | undefined = undefined;
 
     const input = new InputBuilder({
       type,
@@ -17,13 +20,17 @@ export default class Input<T = unknown> {
       connection: defaultConnection,
     });
 
-    input.subscribeToPath('connection', ({ connection }) => {
+    input.subscribeToPath<InputConnection>('connection', (connection) => {
       if (!connection) return;
 
       const { nodeId, outputId } = connection;
-      const output = tree.nodes[nodeId].outputs[outputId];
+      const output = tree.nodes?.[nodeId]?.outputs?.[outputId];
+
+      if (!output) return;
 
       input.value.value = output.value as typeof value;
     });
+
+    this.value = input.value;
   }
 }

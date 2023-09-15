@@ -10,8 +10,10 @@ export default class Builder<T extends NestedRecord<unknown>> {
   public prevValue: T | undefined = undefined;
 
   private globalListeners: Array<(current: T, previous: T) => void> = [];
-  private listeners: Map<string, Array<(value: T, prevValue: T) => void>> =
-    new Map();
+  private listeners: Map<
+    string,
+    Array<(value: T[keyof T], prevValue: T[keyof T]) => void>
+  > = new Map();
 
   constructor(initialState: T) {
     this.value = this.deepProxy(initialState);
@@ -19,9 +21,10 @@ export default class Builder<T extends NestedRecord<unknown>> {
 
   private deepProxy(obj: T, path = ''): T {
     return new Proxy(obj, {
-      get: (target: T, prop: string) => {
-        const value = target[prop] as T;
-        const newPath = path ? `${path}.${prop}` : prop;
+      get: (target: T, prop: symbol) => {
+        const key = prop.toString();
+        const value = target[key] as T;
+        const newPath = path ? `${path}.${key}` : key;
         if (typeof value === 'object' && !isNil(value)) {
           return this.deepProxy(value, newPath);
         }
@@ -56,19 +59,24 @@ export default class Builder<T extends NestedRecord<unknown>> {
     };
   }
 
-  public subscribeToPath(
+  public subscribeToPath<K>(
     path: string,
-    listener: (value: T, prevValue: T) => void,
+    listener: (value: K, prevValue: K) => void,
   ): () => void {
     if (!this.listeners.has(path)) {
       this.listeners.set(path, []);
     }
 
-    this.listeners.get(path)?.push(listener);
+    this.listeners
+      .get(path)
+      ?.push(listener as (value: T[keyof T], prevValue: T[keyof T]) => void);
 
     return () => {
       const pathListeners = this.listeners.get(path);
-      const index = pathListeners?.indexOf(listener) ?? -1;
+      const index =
+        pathListeners?.indexOf(
+          listener as (value: T[keyof T], prevValue: T[keyof T]) => void,
+        ) ?? -1;
       if (index >= 0) {
         pathListeners!.splice(index, 1);
       }
@@ -83,7 +91,7 @@ export default class Builder<T extends NestedRecord<unknown>> {
       const pathListeners = this.listeners.get(path);
       if (pathListeners) {
         const currentValue = this.getValueAtPath(this.value, path);
-        const previousValue = this.getValueAtPath(this.prevValue as T, path);
+        const previousValue = this.getValueAtPath(this.prevValue, path);
 
         pathListeners.forEach((listener) =>
           listener(currentValue, previousValue),
@@ -92,12 +100,12 @@ export default class Builder<T extends NestedRecord<unknown>> {
     });
   }
 
-  private getValueAtPath(obj: T, path: string): T {
+  private getValueAtPath(obj: T | undefined, path: string) {
     return path
       .split('.')
       .reduce(
-        (acc: unknown, part: string) => (acc && (acc as T)[part]) || undefined,
+        (acc, part) => (acc && (acc[part] as T)) ?? undefined,
         obj,
-      ) as T;
+      ) as T[keyof T];
   }
 }
