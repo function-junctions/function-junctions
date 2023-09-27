@@ -1,2 +1,1 @@
-export { default as Observable } from './Observable';
-export { default as UnifiedObservable } from './UnifiedObservable';
+export { Observable, UnifiedObservable } from './modules';
