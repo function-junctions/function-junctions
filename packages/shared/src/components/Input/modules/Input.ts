@@ -4,12 +4,12 @@ export type SerialzedInputSocketConnection = {
 };
 
 export type SerializedInputSocket = {
-  connection: SerialzedInputSocketConnection;
+  connection?: SerialzedInputSocketConnection;
 };
 
 export type InputSocketConnection = SerialzedInputSocketConnection;
 
 export type InputSocket<T> = {
-  connection: InputSocketConnection;
+  connection?: InputSocketConnection;
   value: T;
 };

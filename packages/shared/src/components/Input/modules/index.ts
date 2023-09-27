@@ -3,4 +3,4 @@ export {
   type SerializedInputSocket,
   type InputSocketConnection,
   type InputSocket,
-} from './modules';
+} from './Input';
