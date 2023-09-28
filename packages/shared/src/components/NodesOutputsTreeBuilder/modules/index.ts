@@ -1,7 +1,7 @@
 export {
-  default as NodeOutputsTreeBuilder,
+  default as NodesOutputsTreeBuilder,
   type SerializedNodeOutputsTree,
   type SerializedNodesOutputsTree,
   type NodeOutputsTree,
   type NodesOutputsTree,
-} from './NodeOutputsTreeBuilder';
+} from './NodesOutputsTreeBuilder';

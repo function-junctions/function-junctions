@@ -1,5 +1,5 @@
-export type OutputSocket<T> = {
+export type Output<T> = {
   value: T;
 };
 
-export type SerializedOutputSocket<T> = OutputSocket<T>;
+export type SerializedOutput<T> = Output<T>;

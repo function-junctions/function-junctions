@@ -3,4 +3,4 @@ export {
   type SerializedNodesInputsTree,
   type NodeInputsTree,
   type NodesInputsTree,
-} from './NodeInputsTreeBuilder';
+} from './NodesInputsTreeBuilder';

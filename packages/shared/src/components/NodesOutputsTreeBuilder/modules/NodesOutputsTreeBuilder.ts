@@ -1,9 +1,9 @@
 import { Observable } from '@/components';
-import { OutputSocket, SerializedOutputSocket } from '@/components/Output';
+import { Output, SerializedOutput } from '@/components/Output';
 import { deserializeOutputTree } from '..';
 
 export type SerializedNodeOutputsTree = {
-  outputs: Record<string, SerializedOutputSocket<unknown>>;
+  outputs: Record<string, SerializedOutput<unknown>>;
 };
 
 export type SerializedNodesOutputsTree = Record<
@@ -12,12 +12,12 @@ export type SerializedNodesOutputsTree = Record<
 >;
 
 export type NodeOutputsTree = {
-  outputs: Record<string, OutputSocket<unknown>>;
+  outputs: Record<string, Output<unknown>>;
 };
 
 export type NodesOutputsTree = Record<string, SerializedNodeOutputsTree>;
 
-export default class NodeOutputsTreeBuilder<
+export default class NodesOutputsTreeBuilder<
   T extends SerializedNodesOutputsTree = SerializedNodesOutputsTree,
 > extends Observable<T> {
   constructor(tree: T) {

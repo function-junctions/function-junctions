@@ -1,5 +1,5 @@
 export {
-  NodeOutputsTreeBuilder,
+  NodesOutputsTreeBuilder,
   type SerializedNodeOutputsTree,
   type SerializedNodesOutputsTree,
   type NodeOutputsTree,

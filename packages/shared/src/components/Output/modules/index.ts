@@ -1,1 +1,1 @@
-export { type OutputSocket, type SerializedOutputSocket } from './Output';
+export { type Output, type SerializedOutput } from './Output';

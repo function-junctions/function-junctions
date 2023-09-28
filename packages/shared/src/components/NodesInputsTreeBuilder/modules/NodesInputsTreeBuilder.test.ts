@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
-import { NodeOutputsTreeBuilder } from '@/components/NodeOutputsTreeBuilder';
-import NodeInputsTreeBuilder from './NodeInputsTreeBuilder';
+import { NodesOutputsTreeBuilder } from '@/components/NodesOutputsTreeBuilder';
+import NodesInputsTreeBuilder from './NodesInputsTreeBuilder';
 
 const outputTree = {
   a: {
@@ -32,11 +32,11 @@ const inputsTree = {
   },
 };
 
-const outputs = new NodeOutputsTreeBuilder<typeof outputTree>(outputTree);
+const outputs = new NodesOutputsTreeBuilder<typeof outputTree>(outputTree);
 
 describe('Nodes Inputs Tree', () => {
   test('See if node input connections properly update', () => {
-    const inputs = new NodeInputsTreeBuilder<typeof inputsTree>(
+    const inputs = new NodesInputsTreeBuilder<typeof inputsTree>(
       inputsTree,
       // @ts-expect-error fix this later
       outputs,

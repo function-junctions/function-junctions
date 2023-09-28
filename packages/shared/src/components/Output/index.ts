@@ -1,1 +1,1 @@
-export { type OutputSocket, type SerializedOutputSocket } from './modules';
+export { type Output, type SerializedOutput } from './modules';

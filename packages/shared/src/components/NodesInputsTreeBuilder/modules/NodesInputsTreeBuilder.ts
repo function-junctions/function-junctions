@@ -1,10 +1,10 @@
 import { Observable } from '@/components';
-import { InputSocket, SerializedInputSocket } from '@/components/Input';
-import { NodeOutputsTreeBuilder } from '@/components/NodeOutputsTreeBuilder';
+import { Input, SerializedInput } from '@/components/InputBuilder';
+import { NodesOutputsTreeBuilder } from '@/components/NodesOutputsTreeBuilder';
 import { deserializeInputTree } from '..';
 
 export type SerializedNodeInputsTree = {
-  inputs: Record<string, SerializedInputSocket>;
+  inputs: Record<string, SerializedInput>;
 };
 export type SerializedNodesInputsTree = Record<
   string,
@@ -12,14 +12,14 @@ export type SerializedNodesInputsTree = Record<
 >;
 
 export type NodeInputsTree = {
-  inputs: Record<string, Observable<InputSocket<unknown>>>;
+  inputs: Record<string, Observable<Input<unknown>>>;
 };
 export type NodesInputsTree = Record<string, NodeInputsTree>;
 
-export default class NodeInputsTreeBuilder<
+export default class NodesInputsTreeBuilder<
   T extends SerializedNodesInputsTree = SerializedNodesInputsTree,
 > extends Observable<NodesInputsTree> {
-  constructor(tree: T, outputTreeBuilder: NodeOutputsTreeBuilder) {
+  constructor(tree: T, outputTreeBuilder: NodesOutputsTreeBuilder) {
     super(deserializeInputTree(tree, outputTreeBuilder));
   }
 }
