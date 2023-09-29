@@ -1,6 +1,6 @@
 import { Observable } from '@/components';
 import { Output, SerializedOutput } from '@/components/Output';
-import { deserializeOutputTree } from '..';
+import { deserializeOutputTree } from '@/components/NodesOutputsTreeBuilder';
 
 export type SerializedNodeOutputsTree = {
   outputs: Record<string, SerializedOutput<unknown>>;

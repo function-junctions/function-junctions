@@ -4,8 +4,10 @@ import {
   NodesOutputsTreeBuilder,
   SerializedNodesOutputsTree,
 } from '@/components/NodesOutputsTreeBuilder';
-import { SerializedNodesInputsTree } from '..';
-import { NodesInputsTree } from '../modules';
+import {
+  SerializedNodesInputsTree,
+  NodesInputsTree,
+} from '@/components/NodesInputsTreeBuilder';
 import { InputBuilder } from '@/components/InputBuilder';
 
 const deserializeInputTree = <
