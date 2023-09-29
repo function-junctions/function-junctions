@@ -23,10 +23,25 @@ module.exports = {
       'error',
       { endOfLine: 'auto' }
     ],
-    '@typescript-eslint/lines-between-class-members': 0,
-    'react/jsx-filename-extension': 0,
-    'import/extensions': 0,
-    'class-methods-use-this': 0,
-    'import/no-cycle': 0,
+    '@typescript-eslint/lines-between-class-members': 'off',
+    'react/jsx-filename-extension': 'off',
+    'import/extensions': 'off',
+    'class-methods-use-this': 'off',
+    'import/no-cycle': 'off',
+    'no-restricted-imports': [
+      'error',
+      {
+        patterns: [
+          {
+            group: ['..*'],
+            message: 'Relative parent imports aren\'t allowed',
+          },
+          {
+            group: ['@/*/*/*'],
+            message: 'Don\'t reach that deep, re-export with index.ts instead',
+          },
+        ],
+      },
+    ],
   },
 };
