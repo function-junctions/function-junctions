@@ -29,11 +29,12 @@ export default class InputBuilder<T = unknown> extends Observable<Input<T>> {
       const { nodeId: connectedNodeId, outputId: connectedOutputId } =
         inputConnection;
 
-      const value = tree?.[connectedNodeId]?.outputs?.[connectedOutputId] as T;
+      const value =
+        tree?.nodes?.[connectedNodeId]?.outputs?.[connectedOutputId].value;
 
       if (isNil(value)) return;
 
-      this.value.value = value;
+      this.value.value = value as T;
     });
   }
 

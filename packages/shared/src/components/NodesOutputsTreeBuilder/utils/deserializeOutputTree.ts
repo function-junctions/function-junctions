@@ -1,7 +1,7 @@
-import { SerializedNodesOutputsTree } from '..';
+import { SerializedNodesOutputsTree, NodesOutputsTree } from '..';
 
 const deserializeOutputTree = <T extends SerializedNodesOutputsTree>(
   serializedTree: T,
-): T => serializedTree;
+): NodesOutputsTree => serializedTree;
 
 export default deserializeOutputTree;
