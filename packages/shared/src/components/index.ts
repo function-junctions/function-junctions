@@ -1,5 +1,1 @@
-export {
-  Proxyable,
-  type PropertyChangeEvent,
-  type PropertyReadEvent,
-} from './Proxyable';
+export { Observable, UnifiedObservable } from './Observable';
