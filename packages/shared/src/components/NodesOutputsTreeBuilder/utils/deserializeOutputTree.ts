@@ -1,4 +1,7 @@
-import { SerializedNodesOutputsTree, NodesOutputsTree } from '..';
+import {
+  SerializedNodesOutputsTree,
+  NodesOutputsTree,
+} from '@/components/NodesOutputsTreeBuilder';
 
 const deserializeOutputTree = <T extends SerializedNodesOutputsTree>(
   serializedTree: T,
