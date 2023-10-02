@@ -1,5 +1,5 @@
 import cloneDeep from 'lodash/cloneDeep';
-import assign from 'lodash/assign';
+import merge from 'lodash/merge';
 import Observable, { NestedRecord } from './Observable';
 
 type MergeObj<T, U> = T & U;
@@ -35,7 +35,7 @@ export default class UnifiedObservable<
     trees: UnifiedObservables<U>,
   ): Merge<U> {
     return trees.reduce(
-      (merged, tree) => assign(merged, tree.value),
+      (merged, tree) => merge(merged, tree.value),
       {} as Merge<U>,
     );
   }
@@ -57,7 +57,7 @@ export default class UnifiedObservable<
 
     this.mergedTrees.forEach((tree) => {
       const treeClone = cloneDeep(tree.value);
-      assign(treeClone, this.value);
+      merge(treeClone, this.value);
       // eslint-disable-next-line no-param-reassign
       tree.value = treeClone;
     });

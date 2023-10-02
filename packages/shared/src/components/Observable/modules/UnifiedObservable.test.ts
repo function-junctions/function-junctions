@@ -95,4 +95,31 @@ describe('Unified Observable', () => {
       c: 7,
     });
   });
+  test('See if observables with nested values copy', () => {
+    const a = new Observable({ a: { a: new Observable({ value: 1 }) } });
+    const b = new Observable({ b: { b: new Observable({ value: 2 }) } });
+    const c = new Observable({ c: { c: new Observable({ value: 3 }) } });
+
+    const unified = new UnifiedObservable(a, b, c);
+
+    a.value.a.a.value.value = 6;
+    b.value.b.b.value.value = 7;
+    c.value.c.c.value.value = 8;
+
+    expect({
+      a: unified.value.a.a.value.value,
+      b: unified.value.b.b.value.value,
+      c: unified.value.c.c.value.value,
+      aInstance: typeof unified.value.a.a.subscribe,
+      bInstance: typeof unified.value.b.b.subscribe,
+      cInstance: typeof unified.value.c.c.subscribe,
+    }).toStrictEqual({
+      a: 6,
+      b: 7,
+      c: 8,
+      aInstance: 'function',
+      bInstance: 'function',
+      cInstance: 'function',
+    });
+  });
 });
