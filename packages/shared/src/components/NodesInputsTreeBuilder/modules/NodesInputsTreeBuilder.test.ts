@@ -36,7 +36,7 @@ const inputsTree = {
   },
 };
 
-const outputs = new NodesOutputsTreeBuilder<typeof outputTree>(outputTree);
+const outputs = new NodesOutputsTreeBuilder(outputTree);
 
 describe('Nodes Inputs Tree', () => {
   test('See if node input connections properly update', () => {
