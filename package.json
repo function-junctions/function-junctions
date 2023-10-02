@@ -3,7 +3,9 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "type:check": "turbo run type:check",
     "lint": "turbo run lint",
+    "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {

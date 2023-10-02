@@ -9,6 +9,8 @@
     "dev": {
       "cache": false,
       "persistent": true
-    }
+    },
+    "test": {},
+    "type:check": {}
   }
 }

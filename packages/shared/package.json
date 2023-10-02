@@ -5,8 +5,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "lint": "eslint . --ext ts --max-warnings 0",
     "preview": "vite preview",
-    "test": "vitest"
+    "type:check": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.197",

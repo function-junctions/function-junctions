@@ -1,0 +1,24 @@
+name: Function Junctions CI
+
+on:
+  workflow_call:
+
+jobs:
+  test-and-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - uses: bahmutov/npm-install@v1
+
+      - name: Typecheck
+        run: yarn run type:check
+
+      - name: Run Typescript linting
+        run: yarn lint
+
+      - name: Run tests
+        run: yarn test
+
