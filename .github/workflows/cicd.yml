@@ -1,0 +1,24 @@
+name: FJ CICD
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - v**
+
+  pull_request:
+    paths-ignore:
+      - "docs/**"
+      - "*.md"
+
+  workflow_dispatch:
+
+# This will cancel previous runs on a branch when a new commit is pushed, saving build minutes
+concurrency:
+  group: fj-cicd-${{ github.ref }}-1
+  cancel-in-progress: true
+
+jobs:
+  fj-ci:
+    uses: ./.github/workflows/_fj-ci.yml
