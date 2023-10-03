@@ -2,6 +2,13 @@ import { test, describe, expect } from 'vitest';
 import { SerializedTree, TreeBuilder } from '.';
 
 const serializedTree: SerializedTree = {
+  editor: {
+    originX: 0,
+    originY: 0,
+    translateX: 0,
+    translateY: 0,
+    scale: 0,
+  },
   nodes: {
     a: {
       inputs: {
@@ -55,21 +62,46 @@ describe('Tree Builder', () => {
       bOutput: `hello again!`,
     });
   });
-  test('check to see if tree builder can load additional trees', () => {
+  test('check to see if tree builder can load property tree', () => {
     const tree = new TreeBuilder(serializedTree, {
       additionalBuilders: ['nodeProperties'],
     });
 
+    const nodePropertyTree = tree.nodePropertyTree?.value;
+
     expect({
-      aInput: tree.value.nodes.a.inputs.test.type,
-      aOutput: tree.value.nodes.a.outputs.test.type,
-      bInput: tree.value.nodes.b.inputs.test.type,
-      bOutput: tree.value.nodes.b.outputs.test.type,
+      aInputType: tree.value.nodes.a.inputs.test.type,
+      aOutputType: tree.value.nodes.a.outputs.test.type,
+      bInputType: tree.value.nodes.b.inputs.test.type,
+      bOutputType: tree.value.nodes.b.outputs.test.type,
+      aPTreeInputType: nodePropertyTree?.nodes.a.inputs.test.type,
+      aPTreeOutputType: nodePropertyTree?.nodes.a.outputs.test.type,
+      bPTreeInputType: nodePropertyTree?.nodes.b.inputs.test.type,
+      bPTreeOutputType: nodePropertyTree?.nodes.b.outputs.test.type,
     }).toStrictEqual({
-      aInput: 'string',
-      aOutput: `string`,
-      bInput: `string`,
-      bOutput: `string`,
+      aInputType: 'string',
+      aOutputType: `string`,
+      bInputType: `string`,
+      bOutputType: `string`,
+      aPTreeInputType: `string`,
+      aPTreeOutputType: `string`,
+      bPTreeInputType: `string`,
+      bPTreeOutputType: `string`,
+    });
+  });
+  test('check to see if tree builder can load editor position tree', () => {
+    const tree = new TreeBuilder(serializedTree, {
+      additionalBuilders: ['editorPosition'],
+    });
+
+    const editorPositionTree = tree.editorPositionTree?.value;
+
+    expect({
+      position: tree.value.editor,
+      pTreePosition: editorPositionTree?.editor,
+    }).toStrictEqual({
+      position: serializedTree.editor,
+      pTreePosition: serializedTree.editor,
     });
   });
 });
