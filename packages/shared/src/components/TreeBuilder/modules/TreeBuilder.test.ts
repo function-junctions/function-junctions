@@ -11,6 +11,8 @@ const serializedTree: SerializedTree = {
   },
   nodes: {
     a: {
+      x: 0,
+      y: 0,
       inputs: {
         test: {
           type: 'string',
@@ -24,6 +26,8 @@ const serializedTree: SerializedTree = {
       },
     },
     b: {
+      x: 0,
+      y: 0,
       inputs: {
         test: {
           type: 'string',
@@ -69,26 +73,64 @@ describe('Tree Builder', () => {
 
     const nodePropertyTree = tree.nodePropertyTree?.value;
 
+    const aType = {
+      inputs: {
+        test: {
+          readonly: undefined,
+          type: tree.value.nodes.a.inputs.test.type,
+        },
+      },
+      outputs: {
+        test: {
+          readonly: undefined,
+          type: tree.value.nodes.a.outputs.test.type,
+        },
+      },
+    };
+
+    const bType = {
+      inputs: {
+        test: {
+          readonly: undefined,
+          type: tree.value.nodes.b.inputs.test.type,
+        },
+      },
+      outputs: {
+        test: {
+          readonly: undefined,
+          type: tree.value.nodes.b.outputs.test.type,
+        },
+      },
+    };
+
+    const expectedNode = {
+      inputs: {
+        test: {
+          readonly: undefined,
+          type: 'string',
+        },
+      },
+      outputs: {
+        test: {
+          readonly: undefined,
+          type: 'string',
+        },
+      },
+    };
+
     expect({
-      aInputType: tree.value.nodes.a.inputs.test.type,
-      aOutputType: tree.value.nodes.a.outputs.test.type,
-      bInputType: tree.value.nodes.b.inputs.test.type,
-      bOutputType: tree.value.nodes.b.outputs.test.type,
-      aPTreeInputType: nodePropertyTree?.nodes.a.inputs.test.type,
-      aPTreeOutputType: nodePropertyTree?.nodes.a.outputs.test.type,
-      bPTreeInputType: nodePropertyTree?.nodes.b.inputs.test.type,
-      bPTreeOutputType: nodePropertyTree?.nodes.b.outputs.test.type,
+      aType,
+      bType,
+      aPTreeType: nodePropertyTree?.nodes.a,
+      bPTreeType: nodePropertyTree?.nodes.b,
     }).toStrictEqual({
-      aInputType: 'string',
-      aOutputType: `string`,
-      bInputType: `string`,
-      bOutputType: `string`,
-      aPTreeInputType: `string`,
-      aPTreeOutputType: `string`,
-      bPTreeInputType: `string`,
-      bPTreeOutputType: `string`,
+      aType: expectedNode,
+      bType: expectedNode,
+      aPTreeType: expectedNode,
+      bPTreeType: expectedNode,
     });
   });
+
   test('check to see if tree builder can load editor position tree', () => {
     const tree = new TreeBuilder(serializedTree, {
       additionalBuilders: ['editorPosition'],
@@ -102,6 +144,37 @@ describe('Tree Builder', () => {
     }).toStrictEqual({
       position: serializedTree.editor,
       pTreePosition: serializedTree.editor,
+    });
+  });
+  test('check to see if tree builder can load nodes position tree', () => {
+    const tree = new TreeBuilder(serializedTree, {
+      additionalBuilders: ['nodesPosition'],
+    });
+
+    const nodesPositionTree = tree.nodesPositionTree?.value;
+
+    expect({
+      aPosition: { x: tree.value.nodes.a.x, y: tree.value.nodes.a.y },
+      aPTreePosition: nodesPositionTree?.nodes.a,
+      bPosition: { x: tree.value.nodes.b.x, y: tree.value.nodes.b.y },
+      bPTreePosition: nodesPositionTree?.nodes.b,
+    }).toStrictEqual({
+      aPosition: {
+        x: 0,
+        y: 0,
+      },
+      aPTreePosition: {
+        x: 0,
+        y: 0,
+      },
+      bPosition: {
+        x: 0,
+        y: 0,
+      },
+      bPTreePosition: {
+        x: 0,
+        y: 0,
+      },
     });
   });
 });

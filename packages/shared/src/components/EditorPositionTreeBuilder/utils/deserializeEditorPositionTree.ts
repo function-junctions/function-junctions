@@ -5,6 +5,6 @@ import {
 
 const deserializeEditorPositionTree = <T extends SerializedEditorPositionTree>(
   serializedTree: T,
-): EditorPositionTree => serializedTree;
+): EditorPositionTree => ({ editor: serializedTree.editor });
 
 export default deserializeEditorPositionTree;
