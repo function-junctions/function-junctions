@@ -1,3 +1,4 @@
+import keys from 'lodash/keys';
 import {
   SerializedNodesOutputsTree,
   NodesOutputsTree,
@@ -5,6 +6,15 @@ import {
 
 const deserializeOutputTree = <T extends SerializedNodesOutputsTree>(
   serializedTree: T,
-): NodesOutputsTree => serializedTree;
+): NodesOutputsTree => ({
+  nodes: keys(serializedTree.nodes).reduce((prevNodePositions, key) => {
+    const { outputs } = serializedTree.nodes[key];
+
+    return {
+      ...prevNodePositions,
+      [key]: { outputs },
+    };
+  }, {}),
+});
 
 export default deserializeOutputTree;
