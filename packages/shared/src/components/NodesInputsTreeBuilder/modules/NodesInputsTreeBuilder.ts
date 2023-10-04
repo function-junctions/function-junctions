@@ -4,7 +4,10 @@ import {
   NodesOutputsTreeBuilder,
   SerializedNodesOutputsTree,
 } from '@/components/NodesOutputsTreeBuilder';
-import { deserializeInputTree } from '@/components/NodesInputsTreeBuilder';
+import {
+  deserializeInputTree,
+  serializeInputTree,
+} from '@/components/NodesInputsTreeBuilder';
 
 export type SerializedNodeInputsTree = {
   inputs: Record<string, SerializedInput>;
@@ -27,4 +30,6 @@ export default class NodesInputsTreeBuilder<
   constructor(tree: T, outputTreeBuilder: NodesOutputsTreeBuilder<TOutput>) {
     super(deserializeInputTree<T, TOutput>(tree, outputTreeBuilder));
   }
+
+  public serialize = () => serializeInputTree(this.value);
 }

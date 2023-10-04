@@ -5,4 +5,4 @@ export {
   type NodesInputsTree,
   NodesInputsTreeBuilder,
 } from './modules';
-export { deserializeInputTree } from './utils';
+export { deserializeInputTree, serializeInputTree } from './utils';

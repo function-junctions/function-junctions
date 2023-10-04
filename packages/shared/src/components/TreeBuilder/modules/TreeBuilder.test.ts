@@ -76,12 +76,14 @@ describe('Tree Builder', () => {
     const aType = {
       inputs: {
         test: {
+          title: undefined,
           readonly: undefined,
           type: tree.value.nodes.a.inputs.test.type,
         },
       },
       outputs: {
         test: {
+          title: undefined,
           readonly: undefined,
           type: tree.value.nodes.a.outputs.test.type,
         },
@@ -91,12 +93,14 @@ describe('Tree Builder', () => {
     const bType = {
       inputs: {
         test: {
+          title: undefined,
           readonly: undefined,
           type: tree.value.nodes.b.inputs.test.type,
         },
       },
       outputs: {
         test: {
+          title: undefined,
           readonly: undefined,
           type: tree.value.nodes.b.outputs.test.type,
         },
@@ -106,12 +110,14 @@ describe('Tree Builder', () => {
     const expectedNode = {
       inputs: {
         test: {
+          title: undefined,
           readonly: undefined,
           type: 'string',
         },
       },
       outputs: {
         test: {
+          title: undefined,
           readonly: undefined,
           type: 'string',
         },
