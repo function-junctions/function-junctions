@@ -25,6 +25,11 @@ import {
   NodesPositionTreeBuilder,
   SerializedNodesPositionTree,
 } from '@/components/NodesPositionTreeBuilder';
+import {
+  NodesComponentTree,
+  NodesComponentTreeBuilder,
+  SerializedNodesComponentTree,
+} from '@/components/NodesComponentTreeBuilder';
 
 export type SerializedTree = SerializedNodesOutputsTree &
   SerializedNodesInputsTree &
@@ -32,9 +37,13 @@ export type SerializedTree = SerializedNodesOutputsTree &
   SerializedEditorPositionTree &
   SerializedNodesPositionTree;
 
+export type SerializedTreeWithBlueprintData = SerializedTree &
+  SerializedNodesComponentTree;
+
 export type Tree = [
   NodesOutputsTree,
   NodesInputsTree,
+  NodesComponentTree,
   // Anything beyond here is a partial since it may not be loaded
   DeepPartial<NodesPropertyTree>,
   DeepPartial<EditorPositionTree>,
@@ -42,7 +51,7 @@ export type Tree = [
 ];
 
 export type TreeBuilderKeys = OneOfEach<
-  'nodeProperties' | 'editorPosition' | 'nodesPosition'
+  'nodeProperties' | 'editorPosition' | 'nodesPosition' | 'nodesComponent'
 >;
 
 export type TreeBuilderParams = {
@@ -56,11 +65,16 @@ export default class TreeBuilder extends UnifiedObservable<Tree> {
   public nodePropertyTree?: NodesPropertyTreeBuilder;
   public editorPositionTree?: EditorPositionTreeBuilder;
   public nodesPositionTree?: NodesPositionTreeBuilder;
+  public nodesComponentTree?: NodesComponentTreeBuilder;
 
-  constructor(serializedTree: SerializedTree, params?: TreeBuilderParams) {
-    // Tree must always include outputs & inputs
+  constructor(
+    serializedTree: SerializedTreeWithBlueprintData,
+    params?: TreeBuilderParams,
+  ) {
+    // Tree must always include outputs, inputs, & components
     const outputTree = new NodesOutputsTreeBuilder(serializedTree);
     const inputTree = new NodesInputsTreeBuilder(serializedTree, outputTree);
+    const nodesComponentTree = new NodesComponentTreeBuilder(serializedTree);
 
     let nodePropertyTree: NodesPropertyTreeBuilder | undefined;
     let editorPositionTree: EditorPositionTreeBuilder | undefined;
@@ -88,10 +102,11 @@ export default class TreeBuilder extends UnifiedObservable<Tree> {
 
     // @ts-expect-error Additional trees cannot be spread as an array, even if the type signature
     // is correct
-    super(outputTree, inputTree, ...additionalTrees);
+    super(outputTree, inputTree, nodesComponentTree, ...additionalTrees);
 
     this.outputTree = outputTree;
     this.inputTree = inputTree;
+    this.nodesComponentTree = nodesComponentTree;
 
     this.nodePropertyTree = nodePropertyTree;
     this.editorPositionTree = editorPositionTree;

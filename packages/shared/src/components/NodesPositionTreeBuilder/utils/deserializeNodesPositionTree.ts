@@ -4,7 +4,7 @@ import {
   NodesPositionTree,
 } from '@/components/NodesPositionTreeBuilder';
 
-const deserializeOutputTree = <T extends SerializedNodesPositionTree>(
+const deserializeNodesPositionTree = <T extends SerializedNodesPositionTree>(
   serializedTree: T,
 ): NodesPositionTree => ({
   nodes: keys(serializedTree.nodes).reduce((prevNodePositions, key) => {
@@ -17,4 +17,4 @@ const deserializeOutputTree = <T extends SerializedNodesPositionTree>(
   }, {}),
 });
 
-export default deserializeOutputTree;
+export default deserializeNodesPositionTree;

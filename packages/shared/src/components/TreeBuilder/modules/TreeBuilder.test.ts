@@ -1,7 +1,7 @@
 import { test, describe, expect } from 'vitest';
-import { SerializedTree, TreeBuilder } from '.';
+import { SerializedTreeWithBlueprintData, TreeBuilder } from '.';
 
-const serializedTree: SerializedTree = {
+const serializedTree: SerializedTreeWithBlueprintData = {
   editor: {
     originX: 0,
     originY: 0,
@@ -13,6 +13,7 @@ const serializedTree: SerializedTree = {
     a: {
       x: 0,
       y: 0,
+      component: undefined,
       inputs: {
         test: {
           type: 'string',
@@ -28,6 +29,7 @@ const serializedTree: SerializedTree = {
     b: {
       x: 0,
       y: 0,
+      component: undefined,
       inputs: {
         test: {
           type: 'string',
