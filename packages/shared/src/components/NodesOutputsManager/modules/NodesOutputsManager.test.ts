@@ -3,7 +3,7 @@ import {
   NodesOutputsTreeBuilder,
   SerializedNodesOutputsTree,
 } from '@/components/NodesOutputsTreeBuilder';
-import { NodesOutputsManager } from '.';
+import NodesOutputsManager from './NodesOutputsManager';
 import {
   NodesInputsTreeBuilder,
   SerializedNodesInputsTree,
