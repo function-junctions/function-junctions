@@ -23,6 +23,7 @@ module.exports = {
       'error',
       { endOfLine: 'auto' }
     ],
+    'no-console': 'off',
     '@typescript-eslint/lines-between-class-members': 'off',
     'react/jsx-filename-extension': 'off',
     'import/extensions': 'off',

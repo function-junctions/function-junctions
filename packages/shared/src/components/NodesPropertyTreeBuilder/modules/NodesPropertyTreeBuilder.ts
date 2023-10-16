@@ -7,6 +7,7 @@ export type SerializedIOPropertyTree<T extends string> = {
 };
 
 export type SerializedNodePropertyTree = {
+  title?: string;
   inputs: Record<string, SerializedIOPropertyTree<string>>;
   outputs: Record<string, SerializedIOPropertyTree<string>>;
 };
@@ -21,6 +22,7 @@ export type IOPropertyTree<T extends string> = {
 };
 
 export type NodePropertyTree = {
+  title?: string;
   inputs: Record<string, IOPropertyTree<string>>;
   outputs: Record<string, IOPropertyTree<string>>;
 };
