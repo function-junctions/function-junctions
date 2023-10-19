@@ -7,9 +7,9 @@ export type SerializedIOPropertyTree = {
 };
 
 export type SerializedNodePropertyTree = {
-  key: string;
-  inputs: Record<string, SerializedIOPropertyTree>;
-  outputs: Record<string, SerializedIOPropertyTree>;
+  type: string;
+  inputs?: Record<string, SerializedIOPropertyTree>;
+  outputs?: Record<string, SerializedIOPropertyTree>;
 };
 
 export type SerializedNodesPropertyTree = {
@@ -22,9 +22,9 @@ export type IOPropertyTree = {
 };
 
 export type NodePropertyTree = {
-  key: string;
-  inputs: Record<string, IOPropertyTree>;
-  outputs: Record<string, IOPropertyTree>;
+  type: string;
+  inputs?: Record<string, IOPropertyTree>;
+  outputs?: Record<string, IOPropertyTree>;
 };
 
 export type NodesPropertyTree = {

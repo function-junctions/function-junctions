@@ -11,6 +11,7 @@ const serializedTree: SerializedTreeWithBlueprintData = {
   },
   nodes: {
     a: {
+      type: 'test',
       x: 0,
       y: 0,
       component: undefined,
@@ -27,6 +28,7 @@ const serializedTree: SerializedTreeWithBlueprintData = {
       },
     },
     b: {
+      type: 'test',
       x: 0,
       y: 0,
       component: undefined,
@@ -73,7 +75,7 @@ describe('Tree Builder', () => {
       additionalBuilders: ['nodeProperties'],
     });
 
-    const nodePropertyTree = tree.nodePropertyTree?.value;
+    const nodesPropertyTree = tree.nodesPropertyTree?.value;
 
     const aType = {
       inputs: {
@@ -129,8 +131,8 @@ describe('Tree Builder', () => {
     expect({
       aType,
       bType,
-      aPTreeType: nodePropertyTree?.nodes.a,
-      bPTreeType: nodePropertyTree?.nodes.b,
+      aPTreeType: nodesPropertyTree?.nodes.a,
+      bPTreeType: nodesPropertyTree?.nodes.b,
     }).toStrictEqual({
       aType: expectedNode,
       bType: expectedNode,

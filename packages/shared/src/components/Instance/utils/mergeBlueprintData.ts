@@ -28,7 +28,7 @@ const mergeBlueprintData = (
       serializedTree.nodes,
       keys(serializedTree.nodes).reduce(
         (prevTree, nodeKey) => {
-          const componentKey = serializedTree.nodes[nodeKey].key;
+          const componentKey = serializedTree.nodes[nodeKey].type;
 
           return {
             ...prevTree,

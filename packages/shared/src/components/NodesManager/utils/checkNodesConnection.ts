@@ -2,6 +2,8 @@ import merge from 'lodash/merge';
 import { NodesInputsTreeBuilder } from '@/components/NodesInputsTreeBuilder';
 import { NodesOutputsTreeBuilder } from '@/components/NodesOutputsTreeBuilder';
 import checkStronglyConnected from './checkStronglyConnected';
+import { NodesValidatorTreeBuilder } from '@/components/NodesValidatorTreeBuilder';
+import { NodesPropertyTreeBuilder } from '@/components/NodesPropertyTreeBuilder';
 
 type ConnectNodesParams = {
   output: {
@@ -14,6 +16,8 @@ type ConnectNodesParams = {
   };
   inputTree: NodesInputsTreeBuilder;
   outputTree: NodesOutputsTreeBuilder;
+  validatorTree: NodesValidatorTreeBuilder;
+  propertyTree: NodesPropertyTreeBuilder;
 };
 
 const checkNodesConnection = ({
@@ -21,20 +25,30 @@ const checkNodesConnection = ({
   input,
   inputTree,
   outputTree,
+  validatorTree,
+  propertyTree,
 }: ConnectNodesParams) => {
   const { nodeId: outputNodeId, outputId } = output;
   const { nodeId: inputNodeId, inputId } = input;
 
-  const outputNode =
-    outputTree.value.nodes?.[outputNodeId]?.outputs?.[outputId];
-  const inputNode = inputTree.value.nodes?.[inputNodeId]?.inputs?.[inputId];
+  const outputNode = merge(
+    outputTree.value.nodes?.[outputNodeId],
+    propertyTree.value.nodes?.[outputNodeId],
+  );
+  const inputNode = inputTree.value.nodes?.[inputNodeId];
 
-  if (!inputNode)
+  const validator =
+    validatorTree.value.nodes?.[inputNodeId].inputs?.[inputNodeId].validator;
+
+  const inputSocket = inputNode?.inputs?.[inputId];
+  const outputSocket = outputNode?.outputs?.[outputId];
+
+  if (!inputSocket)
     throw new Error(
       `The reference for the specified input ${inputId} in the node ${inputNodeId} was not found.`,
     );
 
-  if (!outputNode)
+  if (!outputSocket)
     throw new Error(
       `The reference for the specified output ${outputId} in the node ${outputNodeId} was not found.`,
     );
@@ -60,7 +74,7 @@ const checkNodesConnection = ({
     }),
   );
 
-  return isStronglyConnected;
+  return isStronglyConnected && validator(outputSocket);
 };
 
 export default checkNodesConnection;

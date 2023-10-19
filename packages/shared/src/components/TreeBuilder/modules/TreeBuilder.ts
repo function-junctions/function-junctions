@@ -30,6 +30,10 @@ import {
   NodesComponentTreeBuilder,
   SerializedNodesComponentTree,
 } from '@/components/NodesComponentTreeBuilder';
+import {
+  NodesValidatorTreeBuilder,
+  SerializedNodesValidatorTree,
+} from '@/components/NodesValidatorTreeBuilder';
 
 export type SerializedTree = SerializedNodesOutputsTree &
   SerializedNodesInputsTree &
@@ -38,7 +42,8 @@ export type SerializedTree = SerializedNodesOutputsTree &
   SerializedNodesPositionTree;
 
 export type SerializedTreeWithBlueprintData = SerializedTree &
-  SerializedNodesComponentTree;
+  SerializedNodesComponentTree &
+  SerializedNodesValidatorTree;
 
 export type Tree = [
   NodesOutputsTree,
@@ -51,7 +56,11 @@ export type Tree = [
 ];
 
 export type TreeBuilderKeys = OneOfEach<
-  'nodeProperties' | 'editorPosition' | 'nodesPosition' | 'nodesComponent'
+  | 'nodeProperties'
+  | 'editorPosition'
+  | 'nodesPosition'
+  | 'nodesComponent'
+  | 'nodesValidator'
 >;
 
 export type TreeBuilderParams = {
@@ -62,10 +71,11 @@ export default class TreeBuilder extends UnifiedObservable<Tree> {
   public outputTree: NodesOutputsTreeBuilder;
   public inputTree: NodesInputsTreeBuilder;
 
-  public nodePropertyTree?: NodesPropertyTreeBuilder;
+  public nodesPropertyTree?: NodesPropertyTreeBuilder;
   public editorPositionTree?: EditorPositionTreeBuilder;
   public nodesPositionTree?: NodesPositionTreeBuilder;
   public nodesComponentTree?: NodesComponentTreeBuilder;
+  public nodesValidatorTree?: NodesValidatorTreeBuilder;
 
   constructor(
     serializedTree: SerializedTreeWithBlueprintData,
@@ -76,23 +86,30 @@ export default class TreeBuilder extends UnifiedObservable<Tree> {
     const inputTree = new NodesInputsTreeBuilder(serializedTree, outputTree);
     const nodesComponentTree = new NodesComponentTreeBuilder(serializedTree);
 
-    let nodePropertyTree: NodesPropertyTreeBuilder | undefined;
+    let nodesPropertyTree: NodesPropertyTreeBuilder | undefined;
     let editorPositionTree: EditorPositionTreeBuilder | undefined;
     let nodesPositionTree: NodesPositionTreeBuilder | undefined;
+    let nodesValidatorTree: NodesValidatorTreeBuilder | undefined;
 
     // Load any other specified builder
     const additionalTrees =
       params?.additionalBuilders?.map((builder) => {
         switch (builder) {
           case 'nodeProperties':
-            nodePropertyTree = new NodesPropertyTreeBuilder(serializedTree);
-            return nodePropertyTree;
+            nodesPropertyTree = new NodesPropertyTreeBuilder(serializedTree);
+            return nodesPropertyTree;
           case 'editorPosition':
             editorPositionTree = new EditorPositionTreeBuilder(serializedTree);
             return editorPositionTree;
           case 'nodesPosition':
             nodesPositionTree = new NodesPositionTreeBuilder(serializedTree);
             return nodesPositionTree;
+          case 'nodesValidator':
+            nodesValidatorTree = new NodesValidatorTreeBuilder(
+              serializedTree,
+              serializedTree,
+            );
+            return nodesValidatorTree;
           default:
             throw new Error(
               'An unknown tree builder was given to param "additionalBuilders"',
@@ -108,8 +125,9 @@ export default class TreeBuilder extends UnifiedObservable<Tree> {
     this.inputTree = inputTree;
     this.nodesComponentTree = nodesComponentTree;
 
-    this.nodePropertyTree = nodePropertyTree;
+    this.nodesPropertyTree = nodesPropertyTree;
     this.editorPositionTree = editorPositionTree;
     this.nodesPositionTree = nodesPositionTree;
+    this.nodesValidatorTree = nodesValidatorTree;
   }
 }
