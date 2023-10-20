@@ -1,4 +1,3 @@
-import { SerializedInputConnection } from '@/components/InputBuilder';
 import { NodesManager } from '@/components/NodesManager';
 import { SerializedIOPropertyTree } from '@/components/NodesPropertyTreeBuilder';
 import { SerializedOutput } from '@/components/Output';
@@ -19,7 +18,6 @@ export type OutputBlueprint<T = unknown> = IOBlueprint & {
 };
 
 export type InputBlueprint = IOBlueprint & {
-  defaultConnection?: SerializedInputConnection;
   validator?: (
     incomingOutput: SerializedOutput<unknown> & SerializedIOPropertyTree,
   ) => boolean;
@@ -46,8 +44,7 @@ export type InstanceParams<
 export default class Instance<
   TBlueprint extends NodesBlueprint = NodesBlueprint,
   TSerializedTree extends SerializedTree = SerializedTree,
-> {
-  public tree: TreeBuilder;
+> extends TreeBuilder {
   public api?: NodesManager;
 
   constructor({
@@ -59,21 +56,17 @@ export default class Instance<
       nodes: {},
     };
 
-    const tree = new TreeBuilder(
-      mergeBlueprintData(blueprint, defaultTree ?? initalTree),
-      {
-        additionalBuilders: additionalTreeBuilders,
-      },
-    );
+    super(mergeBlueprintData(blueprint, defaultTree ?? initalTree), {
+      additionalBuilders: additionalTreeBuilders,
+    });
 
-    if (tree.nodesValidatorTree && tree.nodesPropertyTree)
+    if (this.nodesValidatorTree && this.nodesPropertyTree)
       this.api = new NodesManager({
-        inputTree: tree.inputTree,
-        outputTree: tree.outputTree,
-        validatorTree: tree.nodesValidatorTree,
-        propertyTree: tree.nodesPropertyTree,
+        inputTree: this.inputTree,
+        outputTree: this.outputTree,
+        validatorTree: this.nodesValidatorTree,
+        propertyTree: this.nodesPropertyTree,
+        blueprint,
       });
-
-    this.tree = tree;
   }
 }

@@ -3,12 +3,14 @@ import { NodesOutputsTreeBuilder } from '@/components/NodesOutputsTreeBuilder';
 import { checkNodesConnection } from '@/components/NodesManager';
 import { NodesValidatorTreeBuilder } from '@/components/NodesValidatorTreeBuilder';
 import { NodesPropertyTreeBuilder } from '@/components/NodesPropertyTreeBuilder';
+import { NodesBlueprint } from '@/components/Instance';
 
 export type NodesManagerParams = {
   inputTree: NodesInputsTreeBuilder;
   outputTree: NodesOutputsTreeBuilder;
   validatorTree: NodesValidatorTreeBuilder;
   propertyTree: NodesPropertyTreeBuilder;
+  blueprint: NodesBlueprint;
 };
 
 export default class NodesManager {
@@ -16,17 +18,20 @@ export default class NodesManager {
   public outputTree: NodesOutputsTreeBuilder;
   public validatorTree: NodesValidatorTreeBuilder;
   public propertyTree: NodesPropertyTreeBuilder;
+  public blueprint: NodesBlueprint;
 
   constructor({
     inputTree,
     outputTree,
     validatorTree,
     propertyTree,
+    blueprint,
   }: NodesManagerParams) {
     this.inputTree = inputTree;
     this.outputTree = outputTree;
     this.validatorTree = validatorTree;
     this.propertyTree = propertyTree;
+    this.blueprint = blueprint;
   }
 
   public connect = (

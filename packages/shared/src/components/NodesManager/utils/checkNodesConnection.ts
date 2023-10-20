@@ -2,7 +2,10 @@ import merge from 'lodash/merge';
 import { NodesInputsTreeBuilder } from '@/components/NodesInputsTreeBuilder';
 import { NodesOutputsTreeBuilder } from '@/components/NodesOutputsTreeBuilder';
 import checkStronglyConnected from './checkStronglyConnected';
-import { NodesValidatorTreeBuilder } from '@/components/NodesValidatorTreeBuilder';
+import {
+  NodeInputValidator,
+  NodesValidatorTreeBuilder,
+} from '@/components/NodesValidatorTreeBuilder';
 import { NodesPropertyTreeBuilder } from '@/components/NodesPropertyTreeBuilder';
 
 type ConnectNodesParams = {
@@ -35,13 +38,22 @@ const checkNodesConnection = ({
     outputTree.value.nodes?.[outputNodeId],
     propertyTree.value.nodes?.[outputNodeId],
   );
-  const inputNode = inputTree.value.nodes?.[inputNodeId];
 
-  const validator =
-    validatorTree.value.nodes?.[inputNodeId].inputs?.[inputNodeId].validator;
+  const inputNode = merge(
+    inputTree.value.nodes?.[inputNodeId],
+    merge(
+      propertyTree.value.nodes?.[inputNodeId],
+      validatorTree.value.nodes?.[inputNodeId],
+    ),
+  );
 
   const inputSocket = inputNode?.inputs?.[inputId];
   const outputSocket = outputNode?.outputs?.[outputId];
+
+  const defaultValidator: NodeInputValidator = ({ type }) =>
+    type === inputSocket?.type;
+
+  const validator = inputSocket.validator ?? defaultValidator;
 
   if (!inputSocket)
     throw new Error(
