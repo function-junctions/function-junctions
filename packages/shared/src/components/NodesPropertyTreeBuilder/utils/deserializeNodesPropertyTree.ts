@@ -11,6 +11,8 @@ const deserializeNodesPropertyTree = <T extends SerializedNodesPropertyTree>(
     const { inputs, outputs, type: propertyKey } = serializedTree.nodes[key];
 
     const inputProperties = keys(inputs).reduce((prevInputs, inputKey) => {
+      if (!inputs) return prevInputs;
+
       const { type, readonly } = inputs[inputKey];
 
       return {
@@ -20,6 +22,8 @@ const deserializeNodesPropertyTree = <T extends SerializedNodesPropertyTree>(
     }, {});
 
     const outputProperties = keys(outputs).reduce((prevOutputs, outputKey) => {
+      if (!outputs) return prevOutputs;
+
       const { type, readonly } = outputs[outputKey];
 
       return {
