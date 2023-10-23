@@ -1,6 +1,6 @@
 export {
-  type SerializedNodeComponentTree,
-  type SerializedNodesComponentTree,
+  type InitialNodeComponentTree,
+  type InitialNodesComponentTree,
   type NodeComponentTree,
   type NodesComponentTree,
   default as NodesComponentTreeBuilder,

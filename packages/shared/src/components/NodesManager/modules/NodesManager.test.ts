@@ -1,23 +1,23 @@
 import { beforeEach, describe, expect, test } from 'vitest';
 import {
   NodesInputsTreeBuilder,
-  SerializedNodesInputsTree,
+  InitialNodesInputsTree,
 } from '@/components/NodesInputsTreeBuilder';
 import {
   NodesOutputsTreeBuilder,
-  SerializedNodesOutputsTree,
+  InitialNodesOutputsTree,
 } from '@/components/NodesOutputsTreeBuilder';
 import NodesManager from './NodesManager';
 import {
   NodesPropertyTreeBuilder,
-  SerializedNodesPropertyTree,
+  InitialNodesPropertyTree,
 } from '@/components/NodesPropertyTreeBuilder';
 import {
   NodesValidatorTreeBuilder,
-  SerializedNodesValidatorTree,
+  InitialNodesValidatorTree,
 } from '@/components/NodesValidatorTreeBuilder';
 
-const outputsTree: SerializedNodesOutputsTree = {
+const outputsTree: InitialNodesOutputsTree = {
   nodes: {
     a: {
       outputs: {
@@ -50,7 +50,7 @@ const outputsTree: SerializedNodesOutputsTree = {
   },
 };
 
-const inputsTree: SerializedNodesInputsTree = {
+const inputsTree: InitialNodesInputsTree = {
   nodes: {
     a: {
       inputs: {
@@ -89,7 +89,7 @@ const inputsTree: SerializedNodesInputsTree = {
   },
 };
 
-const propertyTree: SerializedNodesPropertyTree = {
+const propertyTree: InitialNodesPropertyTree = {
   nodes: {
     a: {
       type: 'test',
@@ -149,7 +149,7 @@ const propertyTree: SerializedNodesPropertyTree = {
   },
 };
 
-const validatorTree: SerializedNodesValidatorTree = {
+const validatorTree: InitialNodesValidatorTree = {
   nodes: {
     c: {
       inputs: {

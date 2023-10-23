@@ -1,8 +1,8 @@
 export {
-  type SerializedNodeInputsTree,
-  type SerializedNodesInputsTree,
+  type InitialNodeInputsTree,
+  type InitialNodesInputsTree,
   type NodeInputsTree,
   type NodesInputsTree,
   NodesInputsTreeBuilder,
 } from './modules';
-export { deserializeInputTree, serializeInputTree } from './utils';
+export { setupInputTree, serializeInputTree } from './utils';

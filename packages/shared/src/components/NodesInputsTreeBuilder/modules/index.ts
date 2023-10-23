@@ -1,6 +1,6 @@
 export {
-  type SerializedNodeInputsTree,
-  type SerializedNodesInputsTree,
+  type InitialNodeInputsTree,
+  type InitialNodesInputsTree,
   type NodeInputsTree,
   type NodesInputsTree,
   default as NodesInputsTreeBuilder,

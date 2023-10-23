@@ -1,8 +1,8 @@
 export {
-  type SerializedNodeComponentTree,
-  type SerializedNodesComponentTree,
+  type InitialNodeComponentTree,
+  type InitialNodesComponentTree,
   type NodeComponentTree,
   type NodesComponentTree,
   NodesComponentTreeBuilder,
 } from './modules';
-export { deserializeNodesComponentTree } from './utils';
+export { setupNodesComponentTree } from './utils';

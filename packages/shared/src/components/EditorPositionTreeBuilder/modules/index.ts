@@ -1,5 +1,5 @@
 export {
-  type SerializedEditorPositionTree,
+  type InitialEditorPositionTree,
   type EditorPositionTree,
   default as EditorPositionTreeBuilder,
 } from './EditorPositionTreeBuilder';

@@ -1,11 +1,11 @@
 import { NodesManager } from '@/components/NodesManager';
-import { SerializedIOPropertyTree } from '@/components/NodesPropertyTreeBuilder';
-import { SerializedOutput } from '@/components/Output';
+import { InitialIOPropertyTree } from '@/components/NodesPropertyTreeBuilder';
+import { InitialOutput } from '@/components/Output';
 import {
-  SerializedTree,
+  InitialTree,
   TreeBuilder,
   TreeBuilderKeys,
-  SerializedTreeWithBlueprintData,
+  InitialTreeWithBlueprintData,
 } from '@/components/TreeBuilder';
 import { mergeBlueprintData } from '@/components/Instance';
 
@@ -19,7 +19,7 @@ export type OutputBlueprint<T = unknown> = IOBlueprint & {
 
 export type InputBlueprint = IOBlueprint & {
   validator?: (
-    incomingOutput: SerializedOutput<unknown> & SerializedIOPropertyTree,
+    incomingOutput: InitialOutput<unknown> & InitialIOPropertyTree,
   ) => boolean;
 };
 
@@ -33,17 +33,17 @@ export type NodesBlueprint = Record<string, NodeBlueprint>;
 
 export type InstanceParams<
   TBlueprint extends NodesBlueprint,
-  TSerializedTree extends SerializedTree = SerializedTree,
+  TInitialTree extends InitialTree = InitialTree,
 > = {
   blueprint: TBlueprint;
-  tree?: TSerializedTree;
+  tree?: TInitialTree;
 
   additionalTreeBuilders?: TreeBuilderKeys;
 };
 
 export default class Instance<
   TBlueprint extends NodesBlueprint = NodesBlueprint,
-  TSerializedTree extends SerializedTree = SerializedTree,
+  TInitialTree extends InitialTree = InitialTree,
 > extends TreeBuilder {
   public api?: NodesManager;
 
@@ -51,8 +51,8 @@ export default class Instance<
     blueprint,
     tree: defaultTree,
     additionalTreeBuilders,
-  }: InstanceParams<TBlueprint, TSerializedTree>) {
-    const initalTree: SerializedTreeWithBlueprintData = {
+  }: InstanceParams<TBlueprint, TInitialTree>) {
+    const initalTree: InitialTreeWithBlueprintData = {
       nodes: {},
     };
 

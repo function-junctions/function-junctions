@@ -1,7 +1,7 @@
 import { Observable } from '@/components';
-import { deserializeEditorPositionTree } from '@/components/EditorPositionTreeBuilder';
+import { setupEditorPositionTree } from '@/components/EditorPositionTreeBuilder';
 
-export type SerializedEditorPositionTree = {
+export type InitialEditorPositionTree = {
   editor?: {
     originX: number;
     originY: number;
@@ -11,12 +11,12 @@ export type SerializedEditorPositionTree = {
   };
 };
 
-export type EditorPositionTree = SerializedEditorPositionTree;
+export type EditorPositionTree = InitialEditorPositionTree;
 
 export default class EditorPositionTreeBuilder<
-  T extends SerializedEditorPositionTree = SerializedEditorPositionTree,
+  T extends InitialEditorPositionTree = InitialEditorPositionTree,
 > extends Observable<EditorPositionTree> {
   constructor(tree: T) {
-    super(deserializeEditorPositionTree(tree));
+    super(setupEditorPositionTree(tree));
   }
 }

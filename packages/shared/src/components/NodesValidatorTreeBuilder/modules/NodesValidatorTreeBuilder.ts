@@ -1,25 +1,25 @@
 import { Observable } from '@/components';
 import {
-  SerializedIOPropertyTree,
-  SerializedNodesPropertyTree,
+  InitialIOPropertyTree,
+  InitialNodesPropertyTree,
 } from '@/components/NodesPropertyTreeBuilder';
-import { deserializeNodesValidatorTree } from '@/components/NodesValidatorTreeBuilder';
-import { SerializedOutput } from '@/components/Output';
+import { setupNodesValidatorTree } from '@/components/NodesValidatorTreeBuilder';
+import { InitialOutput } from '@/components/Output';
 
 export type NodeInputValidator = (
-  incomingOutput: SerializedOutput<unknown> & SerializedIOPropertyTree,
+  incomingOutput: InitialOutput<unknown> & InitialIOPropertyTree,
 ) => boolean;
 
-export type SerializedNodeValidatorTreeInput = {
+export type InitialNodeValidatorTreeInput = {
   validator?: NodeInputValidator;
 };
 
-export type SerializedNodeValidatorTree = {
-  inputs: Record<string, SerializedNodeValidatorTreeInput>;
+export type InitialNodeValidatorTree = {
+  inputs: Record<string, InitialNodeValidatorTreeInput>;
 };
 
-export type SerializedNodesValidatorTree = {
-  nodes: Record<string, SerializedNodeValidatorTree>;
+export type InitialNodesValidatorTree = {
+  nodes: Record<string, InitialNodeValidatorTree>;
 };
 
 export type NodeValidatorTreeInput = {
@@ -37,11 +37,10 @@ export type NodesValidatorTree = {
 };
 
 export default class NodesValidatorTreeBuilder<
-  T extends SerializedNodesValidatorTree = SerializedNodesValidatorTree,
-  TPropertyTree extends
-    SerializedNodesPropertyTree = SerializedNodesPropertyTree,
+  T extends InitialNodesValidatorTree = InitialNodesValidatorTree,
+  TPropertyTree extends InitialNodesPropertyTree = InitialNodesPropertyTree,
 > extends Observable<NodesValidatorTree> {
   constructor(tree: T, propertyTree: TPropertyTree) {
-    super(deserializeNodesValidatorTree(tree, propertyTree));
+    super(setupNodesValidatorTree(tree, propertyTree));
   }
 }

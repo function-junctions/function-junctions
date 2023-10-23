@@ -1,8 +1,8 @@
 export {
   NodesOutputsTreeBuilder,
-  type SerializedNodeOutputsTree,
-  type SerializedNodesOutputsTree,
+  type InitialNodeOutputsTree,
+  type InitialNodesOutputsTree,
   type NodeOutputsTree,
   type NodesOutputsTree,
 } from './modules';
-export { deserializeOutputTree } from './utils';
+export { setupOutputTree } from './utils';

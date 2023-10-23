@@ -1,7 +1,7 @@
 import { test, describe, expect } from 'vitest';
-import { SerializedTreeWithBlueprintData, TreeBuilder } from '.';
+import { InitialTreeWithBlueprintData, TreeBuilder } from '.';
 
-const serializedTree: SerializedTreeWithBlueprintData = {
+const initialTree: InitialTreeWithBlueprintData = {
   editor: {
     originX: 0,
     originY: 0,
@@ -53,7 +53,7 @@ const serializedTree: SerializedTreeWithBlueprintData = {
 
 describe('Tree Builder', () => {
   test('check to see if tree builder can load default trees', () => {
-    const tree = new TreeBuilder(serializedTree);
+    const tree = new TreeBuilder(initialTree);
 
     expect({
       aInput: tree.value.nodes.a.inputs.test.value.connection,
@@ -71,7 +71,7 @@ describe('Tree Builder', () => {
     });
   });
   test('check to see if tree builder can load property tree', () => {
-    const tree = new TreeBuilder(serializedTree, {
+    const tree = new TreeBuilder(initialTree, {
       additionalBuilders: ['nodeProperties'],
     });
 
@@ -139,7 +139,7 @@ describe('Tree Builder', () => {
   });
 
   test('check to see if tree builder can load editor position tree', () => {
-    const tree = new TreeBuilder(serializedTree, {
+    const tree = new TreeBuilder(initialTree, {
       additionalBuilders: ['editorPosition'],
     });
 
@@ -149,12 +149,12 @@ describe('Tree Builder', () => {
       position: tree.value.editor,
       pTreePosition: editorPositionTree?.editor,
     }).toStrictEqual({
-      position: serializedTree.editor,
-      pTreePosition: serializedTree.editor,
+      position: initialTree.editor,
+      pTreePosition: initialTree.editor,
     });
   });
   test('check to see if tree builder can load nodes position tree', () => {
-    const tree = new TreeBuilder(serializedTree, {
+    const tree = new TreeBuilder(initialTree, {
       additionalBuilders: ['nodesPosition'],
     });
 

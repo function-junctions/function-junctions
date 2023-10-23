@@ -1,10 +1,10 @@
 export {
-  type SerializedIOPropertyTree,
-  type SerializedNodePropertyTree,
-  type SerializedNodesPropertyTree,
+  type InitialIOPropertyTree,
+  type InitialNodePropertyTree,
+  type InitialNodesPropertyTree,
   type IOPropertyTree,
   type NodePropertyTree,
   type NodesPropertyTree,
   NodesPropertyTreeBuilder,
 } from './modules';
-export { deserializeNodesPropertyTree } from './utils';
+export { setupNodesPropertyTree } from './utils';

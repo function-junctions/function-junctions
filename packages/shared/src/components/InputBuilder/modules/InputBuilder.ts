@@ -2,16 +2,16 @@ import isNil from 'lodash/isNil';
 import { Observable } from '@/components';
 import { NodesOutputsTree } from '@/components/NodesOutputsTreeBuilder';
 
-export type SerializedInputConnection = {
+export type InitialInputConnection = {
   nodeId: string;
   outputId: string;
 };
 
-export type SerializedInput = {
-  connection?: SerializedInputConnection;
+export type InitialInput = {
+  connection?: InitialInputConnection;
 };
 
-export type InputConnection = SerializedInputConnection;
+export type InputConnection = InitialInputConnection;
 
 export type Input<T> = {
   connection?: InputConnection;

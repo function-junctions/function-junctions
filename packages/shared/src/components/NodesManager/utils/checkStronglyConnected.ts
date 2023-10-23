@@ -1,8 +1,8 @@
 import keys from 'lodash/keys';
 import isNil from 'lodash/isNil';
-import { SerializedNodesInputsTree } from '@/components/NodesInputsTreeBuilder';
+import { InitialNodesInputsTree } from '@/components/NodesInputsTreeBuilder';
 
-type SerializedNodesInputsTreeWithVisits = SerializedNodesInputsTree & {
+type InitialNodesInputsTreeWithVisits = InitialNodesInputsTree & {
   nodes: Record<
     string,
     {
@@ -13,7 +13,7 @@ type SerializedNodesInputsTreeWithVisits = SerializedNodesInputsTree & {
 
 const checkStronglyConnected = (
   entryInputId: string,
-  { nodes }: SerializedNodesInputsTreeWithVisits,
+  { nodes }: InitialNodesInputsTreeWithVisits,
 ): boolean => {
   const traversalLog: boolean[] = [];
 
