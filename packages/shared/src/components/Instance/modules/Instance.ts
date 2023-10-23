@@ -24,8 +24,8 @@ export type InputBlueprint = IOBlueprint & {
 };
 
 export type NodeBlueprint<TComponent = unknown> = {
-  outputs?: Record<string, OutputBlueprint>;
-  inputs?: Record<string, InputBlueprint>;
+  outputBlueprints?: Record<string, OutputBlueprint>;
+  inputBlueprints?: Record<string, InputBlueprint>;
   component: TComponent;
 };
 
@@ -56,9 +56,9 @@ export default class Instance<
       nodes: {},
     };
 
-    super(mergeBlueprintData(blueprint, defaultTree ?? initalTree), {
-      additionalBuilders: additionalTreeBuilders,
-    });
+    const tree = mergeBlueprintData(blueprint, defaultTree ?? initalTree);
+
+    super(tree, { additionalBuilders: additionalTreeBuilders });
 
     if (this.nodesValidatorTree && this.nodesPropertyTree)
       this.api = new NodesManager({

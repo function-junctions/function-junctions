@@ -33,6 +33,7 @@ import {
 import {
   NodesValidatorTreeBuilder,
   SerializedNodesValidatorTree,
+  NodesValidatorTree,
 } from '@/components/NodesValidatorTreeBuilder';
 
 export type SerializedTree = SerializedNodesOutputsTree &
@@ -53,6 +54,8 @@ export type Tree = [
   DeepPartial<NodesPropertyTree>,
   DeepPartial<EditorPositionTree>,
   DeepPartial<NodesPositionTree>,
+  DeepPartial<NodesComponentTree>,
+  DeepPartial<NodesValidatorTree>,
 ];
 
 export type TreeBuilderKeys = OneOfEach<

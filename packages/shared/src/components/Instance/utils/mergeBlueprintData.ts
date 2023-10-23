@@ -28,12 +28,33 @@ const mergeBlueprintData = (
       serializedTree.nodes,
       keys(serializedTree.nodes).reduce(
         (prevTree, nodeKey) => {
-          const componentKey = serializedTree.nodes[nodeKey].type;
+          const blueprintNodeKey = serializedTree.nodes[nodeKey].type;
+          const { inputs } = serializedTree.nodes[nodeKey];
 
           return {
             ...prevTree,
             [nodeKey]: {
-              component: components[componentKey],
+              component: components[blueprintNodeKey],
+              inputs: keys(inputs).reduce((prevInputs, inputKey) => {
+                const input = inputs[inputKey];
+                const inputBlueprint =
+                  blueprint[blueprintNodeKey].inputBlueprints?.[input.type];
+
+                if (!inputBlueprint) {
+                  console.warn(
+                    `The input ${inputKey} in node ${nodeKey} does not have a corresponding blueprint.`,
+                  );
+                  return {
+                    ...prevInputs,
+                    [inputKey]: input,
+                  };
+                }
+
+                return {
+                  ...prevInputs,
+                  [inputKey]: merge(inputBlueprint, input),
+                };
+              }, {}),
             },
           };
         },
