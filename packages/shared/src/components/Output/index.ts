@@ -1,1 +1,1 @@
-export { type Output, type SerializedOutput } from './modules';
+export { type Output, type InitialOutput } from './modules';

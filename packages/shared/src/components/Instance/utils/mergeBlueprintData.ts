@@ -1,16 +1,16 @@
 import merge from 'lodash/merge';
 import keys from 'lodash/keys';
 import {
-  SerializedTree,
-  SerializedTreeWithBlueprintData,
+  InitialTree,
+  InitialTreeWithBlueprintData,
 } from '@/components/TreeBuilder';
 import { NodesBlueprint } from '@/components/Instance';
-import { SerializedNodeComponentTree } from '@/components/NodesComponentTreeBuilder';
+import { InitialNodeComponentTree } from '@/components/NodesComponentTreeBuilder';
 
 const mergeBlueprintData = (
   blueprint: NodesBlueprint,
-  serializedTree: SerializedTree,
-): SerializedTreeWithBlueprintData => {
+  initialTree: InitialTree,
+): InitialTreeWithBlueprintData => {
   const components = keys(blueprint).reduce(
     (prevComponent, componentKey) => {
       const { component } = blueprint[componentKey];
@@ -23,13 +23,13 @@ const mergeBlueprintData = (
   );
 
   return {
-    ...serializedTree,
+    ...initialTree,
     nodes: merge(
-      serializedTree.nodes,
-      keys(serializedTree.nodes).reduce(
+      initialTree.nodes,
+      keys(initialTree.nodes).reduce(
         (prevTree, nodeKey) => {
-          const blueprintNodeKey = serializedTree.nodes[nodeKey].type;
-          const { inputs } = serializedTree.nodes[nodeKey];
+          const blueprintNodeKey = initialTree.nodes[nodeKey].type;
+          const { inputs } = initialTree.nodes[nodeKey];
 
           return {
             ...prevTree,
@@ -58,7 +58,7 @@ const mergeBlueprintData = (
             },
           };
         },
-        {} as Record<string, SerializedNodeComponentTree>,
+        {} as Record<string, InitialNodeComponentTree>,
       ),
     ),
   };

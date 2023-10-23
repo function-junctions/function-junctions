@@ -1,7 +1,7 @@
 export {
-  type SerializedTree,
+  type InitialTree,
   type Tree,
   type TreeBuilderKeys,
-  type SerializedTreeWithBlueprintData,
+  type InitialTreeWithBlueprintData,
   TreeBuilder,
 } from './modules';

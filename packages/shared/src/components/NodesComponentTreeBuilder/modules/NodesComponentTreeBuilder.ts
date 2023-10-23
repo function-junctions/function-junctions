@@ -1,12 +1,12 @@
 import { Observable } from '@/components';
-import { deserializeNodesComponentTree } from '@/components/NodesComponentTreeBuilder';
+import { setupNodesComponentTree } from '@/components/NodesComponentTreeBuilder';
 
-export type SerializedNodeComponentTree<T = unknown> = {
+export type InitialNodeComponentTree<T = unknown> = {
   component: T;
 };
 
-export type SerializedNodesComponentTree = {
-  nodes: Record<string, SerializedNodeComponentTree>;
+export type InitialNodesComponentTree = {
+  nodes: Record<string, InitialNodeComponentTree>;
 };
 
 export type NodeComponentTree<T = unknown> = {
@@ -18,9 +18,9 @@ export type NodesComponentTree = {
 };
 
 export default class NodesComponentTreeBuilder<
-  T extends SerializedNodesComponentTree = SerializedNodesComponentTree,
+  T extends InitialNodesComponentTree = InitialNodesComponentTree,
 > extends Observable<NodesComponentTree> {
   constructor(tree: T) {
-    super(deserializeNodesComponentTree<T>(tree));
+    super(setupNodesComponentTree<T>(tree));
   }
 }

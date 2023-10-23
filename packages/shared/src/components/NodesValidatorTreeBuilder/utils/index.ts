@@ -1,1 +1,1 @@
-export { default as deserializeNodesValidatorTree } from './deserializeNodesValidatorTree';
+export { default as setupNodesValidatorTree } from './setupNodesValidatorTree';

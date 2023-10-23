@@ -1,1 +1,1 @@
-export { default as deserializeEditorPositionTree } from './deserializeEditorPositionTree';
+export { default as setupEditorPositionTree } from './setupEditorPositionTree';

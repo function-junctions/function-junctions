@@ -1,1 +1,1 @@
-export { default as deserializeNodesPositionTree } from './deserializeNodesPositionTree';
+export { default as setupNodesPositionTree } from './setupNodesPositionTree';

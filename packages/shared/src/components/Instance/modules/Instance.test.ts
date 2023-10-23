@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { SerializedTree } from '@/components/TreeBuilder';
+import { InitialTree } from '@/components/TreeBuilder';
 import Instance, {
   InputBlueprint,
   NodesBlueprint,
@@ -33,7 +33,7 @@ const blueprint: NodesBlueprint = {
   },
 };
 
-const initialTree: SerializedTree = {
+const initialTree: InitialTree = {
   nodes: {
     '0': {
       type: 'Math',

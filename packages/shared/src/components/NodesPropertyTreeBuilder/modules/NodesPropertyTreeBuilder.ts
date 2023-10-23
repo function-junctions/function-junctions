@@ -1,19 +1,19 @@
 import { Observable } from '@/components';
-import { deserializeNodesPropertyTree } from '@/components/NodesPropertyTreeBuilder';
+import { setupNodesPropertyTree } from '@/components/NodesPropertyTreeBuilder';
 
-export type SerializedIOPropertyTree = {
+export type InitialIOPropertyTree = {
   type: string;
   readonly?: boolean;
 };
 
-export type SerializedNodePropertyTree = {
+export type InitialNodePropertyTree = {
   type: string;
-  inputs?: Record<string, SerializedIOPropertyTree>;
-  outputs?: Record<string, SerializedIOPropertyTree>;
+  inputs?: Record<string, InitialIOPropertyTree>;
+  outputs?: Record<string, InitialIOPropertyTree>;
 };
 
-export type SerializedNodesPropertyTree = {
-  nodes: Record<string, SerializedNodePropertyTree>;
+export type InitialNodesPropertyTree = {
+  nodes: Record<string, InitialNodePropertyTree>;
 };
 
 export type IOPropertyTree = {
@@ -32,9 +32,9 @@ export type NodesPropertyTree = {
 };
 
 export default class NodesPropertyTreeBuilder<
-  T extends SerializedNodesPropertyTree = SerializedNodesPropertyTree,
+  T extends InitialNodesPropertyTree = InitialNodesPropertyTree,
 > extends Observable<NodesPropertyTree> {
   constructor(tree: T) {
-    super(deserializeNodesPropertyTree(tree));
+    super(setupNodesPropertyTree(tree));
   }
 }

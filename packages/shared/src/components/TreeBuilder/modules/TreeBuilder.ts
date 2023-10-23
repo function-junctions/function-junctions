@@ -1,50 +1,50 @@
 import { UnifiedObservable } from '@/components/Observable';
 import {
-  SerializedNodesInputsTree,
+  InitialNodesInputsTree,
   NodesInputsTreeBuilder,
   NodesInputsTree,
 } from '@/components/NodesInputsTreeBuilder';
 import {
   NodesOutputsTree,
   NodesOutputsTreeBuilder,
-  SerializedNodesOutputsTree,
+  InitialNodesOutputsTree,
 } from '@/components/NodesOutputsTreeBuilder';
 import { DeepPartial, OneOfEach } from '@/types';
 import {
   NodesPropertyTree,
   NodesPropertyTreeBuilder,
-  SerializedNodesPropertyTree,
+  InitialNodesPropertyTree,
 } from '@/components/NodesPropertyTreeBuilder';
 import {
   EditorPositionTree,
   EditorPositionTreeBuilder,
-  SerializedEditorPositionTree,
+  InitialEditorPositionTree,
 } from '@/components/EditorPositionTreeBuilder';
 import {
   NodesPositionTree,
   NodesPositionTreeBuilder,
-  SerializedNodesPositionTree,
+  InitialNodesPositionTree,
 } from '@/components/NodesPositionTreeBuilder';
 import {
   NodesComponentTree,
   NodesComponentTreeBuilder,
-  SerializedNodesComponentTree,
+  InitialNodesComponentTree,
 } from '@/components/NodesComponentTreeBuilder';
 import {
   NodesValidatorTreeBuilder,
-  SerializedNodesValidatorTree,
+  InitialNodesValidatorTree,
   NodesValidatorTree,
 } from '@/components/NodesValidatorTreeBuilder';
 
-export type SerializedTree = SerializedNodesOutputsTree &
-  SerializedNodesInputsTree &
-  SerializedNodesPropertyTree &
-  SerializedEditorPositionTree &
-  SerializedNodesPositionTree;
+export type InitialTree = InitialNodesOutputsTree &
+  InitialNodesInputsTree &
+  InitialNodesPropertyTree &
+  InitialEditorPositionTree &
+  InitialNodesPositionTree;
 
-export type SerializedTreeWithBlueprintData = SerializedTree &
-  SerializedNodesComponentTree &
-  SerializedNodesValidatorTree;
+export type InitialTreeWithBlueprintData = InitialTree &
+  InitialNodesComponentTree &
+  InitialNodesValidatorTree;
 
 export type Tree = [
   NodesOutputsTree,
@@ -81,13 +81,13 @@ export default class TreeBuilder extends UnifiedObservable<Tree> {
   public nodesValidatorTree?: NodesValidatorTreeBuilder;
 
   constructor(
-    serializedTree: SerializedTreeWithBlueprintData,
+    initialTree: InitialTreeWithBlueprintData,
     params?: TreeBuilderParams,
   ) {
     // Tree must always include outputs, inputs, & components
-    const outputTree = new NodesOutputsTreeBuilder(serializedTree);
-    const inputTree = new NodesInputsTreeBuilder(serializedTree, outputTree);
-    const nodesComponentTree = new NodesComponentTreeBuilder(serializedTree);
+    const outputTree = new NodesOutputsTreeBuilder(initialTree);
+    const inputTree = new NodesInputsTreeBuilder(initialTree, outputTree);
+    const nodesComponentTree = new NodesComponentTreeBuilder(initialTree);
 
     let nodesPropertyTree: NodesPropertyTreeBuilder | undefined;
     let editorPositionTree: EditorPositionTreeBuilder | undefined;
@@ -99,18 +99,18 @@ export default class TreeBuilder extends UnifiedObservable<Tree> {
       params?.additionalBuilders?.map((builder) => {
         switch (builder) {
           case 'nodeProperties':
-            nodesPropertyTree = new NodesPropertyTreeBuilder(serializedTree);
+            nodesPropertyTree = new NodesPropertyTreeBuilder(initialTree);
             return nodesPropertyTree;
           case 'editorPosition':
-            editorPositionTree = new EditorPositionTreeBuilder(serializedTree);
+            editorPositionTree = new EditorPositionTreeBuilder(initialTree);
             return editorPositionTree;
           case 'nodesPosition':
-            nodesPositionTree = new NodesPositionTreeBuilder(serializedTree);
+            nodesPositionTree = new NodesPositionTreeBuilder(initialTree);
             return nodesPositionTree;
           case 'nodesValidator':
             nodesValidatorTree = new NodesValidatorTreeBuilder(
-              serializedTree,
-              serializedTree,
+              initialTree,
+              initialTree,
             );
             return nodesValidatorTree;
           default:

@@ -1,14 +1,14 @@
 import keys from 'lodash/keys';
 import {
-  SerializedNodesPropertyTree,
+  InitialNodesPropertyTree,
   NodesPropertyTree,
 } from '@/components/NodesPropertyTreeBuilder';
 
-const deserializeNodesPropertyTree = <T extends SerializedNodesPropertyTree>(
-  serializedTree: T,
+const setupNodesPropertyTree = <T extends InitialNodesPropertyTree>(
+  initialTree: T,
 ): NodesPropertyTree => ({
-  nodes: keys(serializedTree.nodes).reduce((prevNodePositions, key) => {
-    const { inputs, outputs, type: propertyKey } = serializedTree.nodes[key];
+  nodes: keys(initialTree.nodes).reduce((prevNodePositions, key) => {
+    const { inputs, outputs, type: propertyKey } = initialTree.nodes[key];
 
     const inputProperties = keys(inputs).reduce((prevInputs, inputKey) => {
       if (!inputs) return prevInputs;
@@ -43,4 +43,4 @@ const deserializeNodesPropertyTree = <T extends SerializedNodesPropertyTree>(
   }, {}),
 });
 
-export default deserializeNodesPropertyTree;
+export default setupNodesPropertyTree;

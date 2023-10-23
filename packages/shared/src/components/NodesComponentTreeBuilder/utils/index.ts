@@ -1,1 +1,1 @@
-export { default as deserializeNodesComponentTree } from './deserializeNodesComponentTree';
+export { default as setupNodesComponentTree } from './setupNodesComponentTree';

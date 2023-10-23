@@ -2,28 +2,28 @@ import keys from 'lodash/keys';
 import merge from 'lodash/merge';
 import {
   NodesOutputsTreeBuilder,
-  SerializedNodesOutputsTree,
+  InitialNodesOutputsTree,
 } from '@/components/NodesOutputsTreeBuilder';
 import {
-  SerializedNodesInputsTree,
+  InitialNodesInputsTree,
   NodesInputsTree,
 } from '@/components/NodesInputsTreeBuilder';
 import { InputBuilder } from '@/components/InputBuilder';
 
-const deserializeInputTree = <
-  T extends SerializedNodesInputsTree,
-  TOutput extends SerializedNodesOutputsTree = SerializedNodesOutputsTree,
+const setupInputTree = <
+  T extends InitialNodesInputsTree,
+  TOutput extends InitialNodesOutputsTree = InitialNodesOutputsTree,
 >(
-  { nodes: serializedTree }: T,
+  { nodes: initialTree }: T,
   outputsTree: NodesOutputsTreeBuilder<TOutput>,
 ): NodesInputsTree => {
   const tree = outputsTree.value;
 
   return {
-    nodes: keys(serializedTree).reduce((prevInputsTree, nodeKey) => {
-      const { inputs } = serializedTree[nodeKey];
+    nodes: keys(initialTree).reduce((prevInputsTree, nodeKey) => {
+      const { inputs } = initialTree[nodeKey];
 
-      const deserializedInputs = keys(inputs).reduce((prevInput, inputKey) => {
+      const setupdInputs = keys(inputs).reduce((prevInput, inputKey) => {
         const { connection } = inputs[inputKey];
 
         const initialOutputValue =
@@ -44,11 +44,11 @@ const deserializeInputTree = <
 
       return merge(prevInputsTree, {
         [nodeKey]: {
-          inputs: deserializedInputs,
+          inputs: setupdInputs,
         },
       });
     }, {}),
   };
 };
 
-export default deserializeInputTree;
+export default setupInputTree;

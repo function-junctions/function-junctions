@@ -1,8 +1,8 @@
 export {
   NodesPositionTreeBuilder,
-  type SerializedNodePositionTree,
-  type SerializedNodesPositionTree,
+  type InitialNodePositionTree,
+  type InitialNodesPositionTree,
   type NodePositionTree,
   type NodesPositionTree,
 } from './modules';
-export { deserializeNodesPositionTree } from './utils';
+export { setupNodesPositionTree } from './utils';

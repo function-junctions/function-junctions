@@ -1,23 +1,22 @@
 import keys from 'lodash/keys';
 import {
-  SerializedNodesValidatorTree,
+  InitialNodesValidatorTree,
   NodesValidatorTree,
   NodeInputValidator,
 } from '@/components/NodesValidatorTreeBuilder';
-import { SerializedNodesPropertyTree } from '@/components/NodesPropertyTreeBuilder';
+import { InitialNodesPropertyTree } from '@/components/NodesPropertyTreeBuilder';
 
-const deserializeNodesValidatorTree = <T extends SerializedNodesValidatorTree>(
-  serializedTree: T,
-  serializedPropertyTree: SerializedNodesPropertyTree,
+const setupNodesValidatorTree = <T extends InitialNodesValidatorTree>(
+  initialTree: T,
+  initialPropertyTree: InitialNodesPropertyTree,
 ): NodesValidatorTree => ({
-  nodes: keys(serializedTree.nodes).reduce((prevNodePositions, key) => {
-    const { inputs } = serializedTree.nodes[key];
+  nodes: keys(initialTree.nodes).reduce((prevNodePositions, key) => {
+    const { inputs } = initialTree.nodes[key];
 
     const inputProperties = keys(inputs).reduce((prevInputs, inputKey) => {
       const { validator } = inputs[inputKey];
       const defaultValidator: NodeInputValidator = (output) =>
-        output.type ===
-        serializedPropertyTree.nodes[key].inputs?.[inputKey].type;
+        output.type === initialPropertyTree.nodes[key].inputs?.[inputKey].type;
 
       return {
         ...prevInputs,
@@ -34,4 +33,4 @@ const deserializeNodesValidatorTree = <T extends SerializedNodesValidatorTree>(
   }, {}),
 });
 
-export default deserializeNodesValidatorTree;
+export default setupNodesValidatorTree;

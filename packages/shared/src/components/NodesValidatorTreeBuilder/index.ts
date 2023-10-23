@@ -1,11 +1,11 @@
 export {
   type NodeInputValidator,
-  type SerializedNodeValidatorTreeInput,
-  type SerializedNodeValidatorTree,
-  type SerializedNodesValidatorTree,
+  type InitialNodeValidatorTreeInput,
+  type InitialNodeValidatorTree,
+  type InitialNodesValidatorTree,
   type NodeValidatorTreeInput,
   type NodeValidatorTree,
   type NodesValidatorTree,
   NodesValidatorTreeBuilder,
 } from './modules';
-export { deserializeNodesValidatorTree } from './utils';
+export { setupNodesValidatorTree } from './utils';
