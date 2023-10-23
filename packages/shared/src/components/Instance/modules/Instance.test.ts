@@ -19,9 +19,11 @@ const numberInput: InputBlueprint = {
   validator: numberInputValidator,
 };
 
+const component = 'TEST';
+
 const blueprint: NodesBlueprint = {
   Math: {
-    component: 'TEST',
+    component,
     inputBlueprints: {
       number: numberInput,
     },
@@ -100,6 +102,6 @@ describe('Instance', () => {
     });
 
     expect(validatorValue).toEqual(false);
-    expect(node.component).toStrictEqual('TEST');
+    expect(node.component).toEqual(component);
   });
 });
