@@ -1,5 +1,5 @@
 export {
-  type SerialzedInputConnection,
+  type SerializedInputConnection,
   type SerializedInput,
   type InputConnection,
   type Input,

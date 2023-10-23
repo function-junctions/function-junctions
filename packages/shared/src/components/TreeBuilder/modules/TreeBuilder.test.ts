@@ -1,7 +1,7 @@
 import { test, describe, expect } from 'vitest';
-import { SerializedTree, TreeBuilder } from '.';
+import { SerializedTreeWithBlueprintData, TreeBuilder } from '.';
 
-const serializedTree: SerializedTree = {
+const serializedTree: SerializedTreeWithBlueprintData = {
   editor: {
     originX: 0,
     originY: 0,
@@ -11,8 +11,10 @@ const serializedTree: SerializedTree = {
   },
   nodes: {
     a: {
+      type: 'test',
       x: 0,
       y: 0,
+      component: undefined,
       inputs: {
         test: {
           type: 'string',
@@ -26,8 +28,10 @@ const serializedTree: SerializedTree = {
       },
     },
     b: {
+      type: 'test',
       x: 0,
       y: 0,
+      component: undefined,
       inputs: {
         test: {
           type: 'string',
@@ -71,19 +75,18 @@ describe('Tree Builder', () => {
       additionalBuilders: ['nodeProperties'],
     });
 
-    const nodePropertyTree = tree.nodePropertyTree?.value;
+    const nodesPropertyTree = tree.nodesPropertyTree?.value;
 
     const aType = {
+      type: 'test',
       inputs: {
         test: {
-          title: undefined,
           readonly: undefined,
           type: tree.value.nodes.a.inputs.test.type,
         },
       },
       outputs: {
         test: {
-          title: undefined,
           readonly: undefined,
           type: tree.value.nodes.a.outputs.test.type,
         },
@@ -91,16 +94,15 @@ describe('Tree Builder', () => {
     };
 
     const bType = {
+      type: 'test',
       inputs: {
         test: {
-          title: undefined,
           readonly: undefined,
           type: tree.value.nodes.b.inputs.test.type,
         },
       },
       outputs: {
         test: {
-          title: undefined,
           readonly: undefined,
           type: tree.value.nodes.b.outputs.test.type,
         },
@@ -108,16 +110,15 @@ describe('Tree Builder', () => {
     };
 
     const expectedNode = {
+      type: 'test',
       inputs: {
         test: {
-          title: undefined,
           readonly: undefined,
           type: 'string',
         },
       },
       outputs: {
         test: {
-          title: undefined,
           readonly: undefined,
           type: 'string',
         },
@@ -127,8 +128,8 @@ describe('Tree Builder', () => {
     expect({
       aType,
       bType,
-      aPTreeType: nodePropertyTree?.nodes.a,
-      bPTreeType: nodePropertyTree?.nodes.b,
+      aPTreeType: nodesPropertyTree?.nodes.a,
+      bPTreeType: nodesPropertyTree?.nodes.b,
     }).toStrictEqual({
       aType: expectedNode,
       bType: expectedNode,

@@ -11,9 +11,15 @@ export type OneOfEach<
 > = V extends true ? T : never;
 
 export type DeepPartial<T> = {
-  [P in keyof T]?: T[P] extends Array<infer U>
+  // This is needed for functions
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [P in keyof T]?: T[P] extends (...args: any[]) => any
+    ? T[P]
+    : T[P] extends Array<infer U>
     ? Array<DeepPartial<U>>
     : T[P] extends ReadonlyArray<infer U>
     ? ReadonlyArray<DeepPartial<U>>
-    : DeepPartial<T[P]>;
+    : T[P] extends object
+    ? DeepPartial<T[P]>
+    : T[P];
 };

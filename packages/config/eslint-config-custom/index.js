@@ -29,6 +29,7 @@ module.exports = {
     'import/extensions': 'off',
     'class-methods-use-this': 'off',
     'import/no-cycle': 'off',
+    'import/prefer-default-export': 'off',
     'no-restricted-imports': [
       'error',
       {
