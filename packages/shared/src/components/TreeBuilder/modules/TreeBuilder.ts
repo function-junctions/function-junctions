@@ -36,17 +36,17 @@ import {
   NodesValidatorTree,
 } from '@/components/NodesValidatorTreeBuilder';
 import {
-  StoresTree,
-  InitialStoresTree,
-  StoreTreeBuilder,
-} from '@/components/StoreTreeBuilder';
+  NodesStoreTree,
+  InitialNodesStoreTree,
+  NodesStoreTreeBuilder,
+} from '@/components/NodesStoreTreeBuilder';
 
 export type InitialTree = InitialNodesOutputsTree &
   InitialNodesInputsTree &
   InitialNodesPropertyTree &
   InitialEditorPositionTree &
   InitialNodesPositionTree &
-  InitialStoresTree;
+  InitialNodesStoreTree;
 
 export type InitialTreeWithBlueprintData = InitialTree &
   InitialNodesComponentTree &
@@ -62,7 +62,7 @@ export type Tree = [
   DeepPartial<NodesPositionTree>,
   DeepPartial<NodesComponentTree>,
   DeepPartial<NodesValidatorTree>,
-  DeepPartial<StoresTree>,
+  DeepPartial<NodesStoreTree>,
 ];
 
 export type TreeBuilderKeys = OneOfEach<
@@ -87,7 +87,7 @@ export default class TreeBuilder extends UnifiedObservable<Tree> {
   public nodesPositionTree?: NodesPositionTreeBuilder;
   public nodesComponentTree?: NodesComponentTreeBuilder;
   public nodesValidatorTree?: NodesValidatorTreeBuilder;
-  public nodesStoreTree?: StoreTreeBuilder;
+  public nodesStoreTree?: NodesStoreTreeBuilder;
 
   constructor(
     initialTree: InitialTreeWithBlueprintData,
@@ -102,7 +102,7 @@ export default class TreeBuilder extends UnifiedObservable<Tree> {
     let editorPositionTree: EditorPositionTreeBuilder | undefined;
     let nodesPositionTree: NodesPositionTreeBuilder | undefined;
     let nodesValidatorTree: NodesValidatorTreeBuilder | undefined;
-    let nodesStoreTree: StoreTreeBuilder | undefined;
+    let nodesStoreTree: NodesStoreTreeBuilder | undefined;
 
     // Load any other specified builder
     const additionalTrees =
@@ -124,7 +124,7 @@ export default class TreeBuilder extends UnifiedObservable<Tree> {
             );
             return nodesValidatorTree;
           case 'nodesStore':
-            nodesStoreTree = new StoreTreeBuilder(initialTree);
+            nodesStoreTree = new NodesStoreTreeBuilder(initialTree);
             return nodesStoreTree;
           default:
             throw new Error(

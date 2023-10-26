@@ -1,7 +1,12 @@
 import { keys } from 'lodash';
-import { InitialStoresTree, StoresTree } from '@/components/StoreTreeBuilder';
+import {
+  InitialNodesStoreTree,
+  NodesStoreTree,
+} from '@/components/NodesStoreTreeBuilder';
 
-const setupStoreTree = <T extends InitialStoresTree>(tree: T): StoresTree => ({
+const setupStoreTree = <T extends InitialNodesStoreTree>(
+  tree: T,
+): NodesStoreTree => ({
   nodes: keys(tree.nodes).reduce((prevNodeStores, key) => {
     const { store } = tree.nodes[key];
 
