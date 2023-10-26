@@ -1,6 +1,6 @@
 export {
-  type SerialzedInputConnection,
-  type SerializedInput,
+  type InitialInputConnection,
+  type InitialInput,
   type InputConnection,
   type Input,
   InputBuilder,

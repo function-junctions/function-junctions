@@ -2,4 +2,4 @@ export type Output<T> = {
   value: T;
 };
 
-export type SerializedOutput<T> = Output<T>;
+export type InitialOutput<T> = Output<T>;

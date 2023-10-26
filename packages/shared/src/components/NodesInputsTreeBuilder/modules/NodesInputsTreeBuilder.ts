@@ -1,19 +1,19 @@
 import { Observable } from '@/components';
-import { Input, SerializedInput } from '@/components/InputBuilder';
+import { Input, InitialInput } from '@/components/InputBuilder';
 import {
   NodesOutputsTreeBuilder,
-  SerializedNodesOutputsTree,
+  InitialNodesOutputsTree,
 } from '@/components/NodesOutputsTreeBuilder';
 import {
-  deserializeInputTree,
+  setupInputTree,
   serializeInputTree,
 } from '@/components/NodesInputsTreeBuilder';
 
-export type SerializedNodeInputsTree = {
-  inputs: Record<string, SerializedInput>;
+export type InitialNodeInputsTree = {
+  inputs: Record<string, InitialInput>;
 };
-export type SerializedNodesInputsTree = {
-  nodes: Record<string, SerializedNodeInputsTree>;
+export type InitialNodesInputsTree = {
+  nodes: Record<string, InitialNodeInputsTree>;
 };
 
 export type NodeInputsTree = {
@@ -24,11 +24,11 @@ export type NodesInputsTree = {
 };
 
 export default class NodesInputsTreeBuilder<
-  T extends SerializedNodesInputsTree = SerializedNodesInputsTree,
-  TOutput extends SerializedNodesOutputsTree = SerializedNodesOutputsTree,
+  T extends InitialNodesInputsTree = InitialNodesInputsTree,
+  TOutput extends InitialNodesOutputsTree = InitialNodesOutputsTree,
 > extends Observable<NodesInputsTree> {
   constructor(tree: T, outputTreeBuilder: NodesOutputsTreeBuilder<TOutput>) {
-    super(deserializeInputTree<T, TOutput>(tree, outputTreeBuilder));
+    super(setupInputTree<T, TOutput>(tree, outputTreeBuilder));
   }
 
   public serialize = () => serializeInputTree(this.value);

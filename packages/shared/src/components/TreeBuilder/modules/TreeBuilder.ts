@@ -1,48 +1,69 @@
 import { UnifiedObservable } from '@/components/Observable';
 import {
-  SerializedNodesInputsTree,
+  InitialNodesInputsTree,
   NodesInputsTreeBuilder,
   NodesInputsTree,
 } from '@/components/NodesInputsTreeBuilder';
 import {
   NodesOutputsTree,
   NodesOutputsTreeBuilder,
-  SerializedNodesOutputsTree,
+  InitialNodesOutputsTree,
 } from '@/components/NodesOutputsTreeBuilder';
 import { DeepPartial, OneOfEach } from '@/types';
 import {
   NodesPropertyTree,
   NodesPropertyTreeBuilder,
-  SerializedNodesPropertyTree,
+  InitialNodesPropertyTree,
 } from '@/components/NodesPropertyTreeBuilder';
 import {
   EditorPositionTree,
   EditorPositionTreeBuilder,
-  SerializedEditorPositionTree,
+  InitialEditorPositionTree,
 } from '@/components/EditorPositionTreeBuilder';
 import {
   NodesPositionTree,
   NodesPositionTreeBuilder,
-  SerializedNodesPositionTree,
+  InitialNodesPositionTree,
 } from '@/components/NodesPositionTreeBuilder';
+import {
+  NodesComponentTree,
+  NodesComponentTreeBuilder,
+  InitialNodesComponentTree,
+} from '@/components/NodesComponentTreeBuilder';
+import {
+  NodesValidatorTreeBuilder,
+  InitialNodesValidatorTree,
+  NodesValidatorTree,
+} from '@/components/NodesValidatorTreeBuilder';
 
-export type SerializedTree = SerializedNodesOutputsTree &
-  SerializedNodesInputsTree &
-  SerializedNodesPropertyTree &
-  SerializedEditorPositionTree &
-  SerializedNodesPositionTree;
+export type InitialTree = InitialNodesOutputsTree &
+  InitialNodesInputsTree &
+  InitialNodesPropertyTree &
+  InitialEditorPositionTree &
+  InitialNodesPositionTree;
+
+export type InitialTreeWithBlueprintData = InitialTree &
+  InitialNodesComponentTree &
+  InitialNodesValidatorTree;
 
 export type Tree = [
   NodesOutputsTree,
   NodesInputsTree,
+  NodesComponentTree,
   // Anything beyond here is a partial since it may not be loaded
   DeepPartial<NodesPropertyTree>,
   DeepPartial<EditorPositionTree>,
   DeepPartial<NodesPositionTree>,
+  DeepPartial<NodesComponentTree>,
+  DeepPartial<NodesValidatorTree>,
 ];
 
 export type TreeBuilderKeys = OneOfEach<
-  'nodeProperties' | 'editorPosition' | 'nodesPosition'
+  | 'nodeProperties'
+  | 'editorPosition'
+  | 'nodesPosition'
+  | 'nodesComponent'
+  | 'nodesValidator'
 >;
 
 export type TreeBuilderParams = {
@@ -53,32 +74,45 @@ export default class TreeBuilder extends UnifiedObservable<Tree> {
   public outputTree: NodesOutputsTreeBuilder;
   public inputTree: NodesInputsTreeBuilder;
 
-  public nodePropertyTree?: NodesPropertyTreeBuilder;
+  public nodesPropertyTree?: NodesPropertyTreeBuilder;
   public editorPositionTree?: EditorPositionTreeBuilder;
   public nodesPositionTree?: NodesPositionTreeBuilder;
+  public nodesComponentTree?: NodesComponentTreeBuilder;
+  public nodesValidatorTree?: NodesValidatorTreeBuilder;
 
-  constructor(serializedTree: SerializedTree, params?: TreeBuilderParams) {
-    // Tree must always include outputs & inputs
-    const outputTree = new NodesOutputsTreeBuilder(serializedTree);
-    const inputTree = new NodesInputsTreeBuilder(serializedTree, outputTree);
+  constructor(
+    initialTree: InitialTreeWithBlueprintData,
+    params?: TreeBuilderParams,
+  ) {
+    // Tree must always include outputs, inputs, & components
+    const outputTree = new NodesOutputsTreeBuilder(initialTree);
+    const inputTree = new NodesInputsTreeBuilder(initialTree, outputTree);
+    const nodesComponentTree = new NodesComponentTreeBuilder(initialTree);
 
-    let nodePropertyTree: NodesPropertyTreeBuilder | undefined;
+    let nodesPropertyTree: NodesPropertyTreeBuilder | undefined;
     let editorPositionTree: EditorPositionTreeBuilder | undefined;
     let nodesPositionTree: NodesPositionTreeBuilder | undefined;
+    let nodesValidatorTree: NodesValidatorTreeBuilder | undefined;
 
     // Load any other specified builder
     const additionalTrees =
       params?.additionalBuilders?.map((builder) => {
         switch (builder) {
           case 'nodeProperties':
-            nodePropertyTree = new NodesPropertyTreeBuilder(serializedTree);
-            return nodePropertyTree;
+            nodesPropertyTree = new NodesPropertyTreeBuilder(initialTree);
+            return nodesPropertyTree;
           case 'editorPosition':
-            editorPositionTree = new EditorPositionTreeBuilder(serializedTree);
+            editorPositionTree = new EditorPositionTreeBuilder(initialTree);
             return editorPositionTree;
           case 'nodesPosition':
-            nodesPositionTree = new NodesPositionTreeBuilder(serializedTree);
+            nodesPositionTree = new NodesPositionTreeBuilder(initialTree);
             return nodesPositionTree;
+          case 'nodesValidator':
+            nodesValidatorTree = new NodesValidatorTreeBuilder(
+              initialTree,
+              initialTree,
+            );
+            return nodesValidatorTree;
           default:
             throw new Error(
               'An unknown tree builder was given to param "additionalBuilders"',
@@ -88,13 +122,15 @@ export default class TreeBuilder extends UnifiedObservable<Tree> {
 
     // @ts-expect-error Additional trees cannot be spread as an array, even if the type signature
     // is correct
-    super(outputTree, inputTree, ...additionalTrees);
+    super(outputTree, inputTree, nodesComponentTree, ...additionalTrees);
 
     this.outputTree = outputTree;
     this.inputTree = inputTree;
+    this.nodesComponentTree = nodesComponentTree;
 
-    this.nodePropertyTree = nodePropertyTree;
+    this.nodesPropertyTree = nodesPropertyTree;
     this.editorPositionTree = editorPositionTree;
     this.nodesPositionTree = nodesPositionTree;
+    this.nodesValidatorTree = nodesValidatorTree;
   }
 }

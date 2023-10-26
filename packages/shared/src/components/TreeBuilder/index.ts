@@ -1,1 +1,7 @@
-export { type SerializedTree, type Tree, TreeBuilder } from './modules';
+export {
+  type InitialTree,
+  type Tree,
+  type TreeBuilderKeys,
+  type InitialTreeWithBlueprintData,
+  TreeBuilder,
+} from './modules';

@@ -1,7 +1,7 @@
 export {
   default as NodesPositionTreeBuilder,
-  type SerializedNodePositionTree,
-  type SerializedNodesPositionTree,
+  type InitialNodePositionTree,
+  type InitialNodesPositionTree,
   type NodePositionTree,
   type NodesPositionTree,
 } from './NodesPositionTreeBuilder';

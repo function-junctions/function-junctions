@@ -1,15 +1,23 @@
-import { describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, test } from 'vitest';
 import {
   NodesInputsTreeBuilder,
-  SerializedNodesInputsTree,
+  InitialNodesInputsTree,
 } from '@/components/NodesInputsTreeBuilder';
 import {
   NodesOutputsTreeBuilder,
-  SerializedNodesOutputsTree,
+  InitialNodesOutputsTree,
 } from '@/components/NodesOutputsTreeBuilder';
 import NodesManager from './NodesManager';
+import {
+  NodesPropertyTreeBuilder,
+  InitialNodesPropertyTree,
+} from '@/components/NodesPropertyTreeBuilder';
+import {
+  NodesValidatorTreeBuilder,
+  InitialNodesValidatorTree,
+} from '@/components/NodesValidatorTreeBuilder';
 
-const outputsTree: SerializedNodesOutputsTree = {
+const outputsTree: InitialNodesOutputsTree = {
   nodes: {
     a: {
       outputs: {
@@ -32,10 +40,17 @@ const outputsTree: SerializedNodesOutputsTree = {
         },
       },
     },
+    d: {
+      outputs: {
+        number: {
+          value: 12,
+        },
+      },
+    },
   },
 };
 
-const inputsTree: SerializedNodesInputsTree = {
+const inputsTree: InitialNodesInputsTree = {
   nodes: {
     a: {
       inputs: {
@@ -74,13 +89,100 @@ const inputsTree: SerializedNodesInputsTree = {
   },
 };
 
+const propertyTree: InitialNodesPropertyTree = {
+  nodes: {
+    a: {
+      type: 'test',
+      inputs: {
+        string: {
+          type: 'string',
+        },
+      },
+      outputs: {
+        string: {
+          type: 'string',
+        },
+      },
+    },
+    b: {
+      type: 'test',
+      inputs: {
+        string: {
+          type: 'string',
+        },
+      },
+      outputs: {
+        string: {
+          type: 'string',
+        },
+      },
+    },
+    c: {
+      type: 'test',
+      inputs: {
+        string: {
+          type: 'string',
+        },
+      },
+      outputs: {
+        string: {
+          type: 'string',
+        },
+      },
+    },
+    d: {
+      type: 'test',
+      inputs: {
+        string: {
+          type: 'string',
+        },
+      },
+      outputs: {
+        string: {
+          type: 'string',
+        },
+        number: {
+          type: 'number',
+        },
+      },
+    },
+  },
+};
+
+const validatorTree: InitialNodesValidatorTree = {
+  nodes: {
+    c: {
+      inputs: {
+        string: {
+          validator: () => false,
+        },
+      },
+    },
+  },
+};
+
 describe('Nodes manager', () => {
+  let outputs: NodesOutputsTreeBuilder;
+  let inputs: NodesInputsTreeBuilder;
+  let properties: NodesPropertyTreeBuilder;
+  let validator: NodesValidatorTreeBuilder;
+  let manager: NodesManager;
+
+  beforeEach(() => {
+    outputs = new NodesOutputsTreeBuilder(outputsTree);
+    inputs = new NodesInputsTreeBuilder(inputsTree, outputs);
+    properties = new NodesPropertyTreeBuilder(propertyTree);
+    validator = new NodesValidatorTreeBuilder(validatorTree, propertyTree);
+    manager = new NodesManager({
+      inputTree: inputs,
+      outputTree: outputs,
+      propertyTree: properties,
+      validatorTree: validator,
+      blueprint: {},
+    });
+  });
+
   test('check to see if two nodes can connect', () => {
-    const outputs = new NodesOutputsTreeBuilder(outputsTree);
-    const inputs = new NodesInputsTreeBuilder(inputsTree, outputs);
-
-    const manager = new NodesManager(inputs, outputs);
-
     manager.connect(
       {
         nodeId: 'd',
@@ -94,12 +196,8 @@ describe('Nodes manager', () => {
 
     expect(inputs.value.nodes.d.inputs.string.value.value).toBe(`Hello!`);
   });
+
   test('check to see if a node connected to itself throws an exception', () => {
-    const outputs = new NodesOutputsTreeBuilder(outputsTree);
-    const inputs = new NodesInputsTreeBuilder(inputsTree, outputs);
-
-    const manager = new NodesManager(inputs, outputs);
-
     expect(() =>
       manager.connect(
         {
@@ -115,11 +213,36 @@ describe('Nodes manager', () => {
   });
 
   test('check to see if connected nodes respects a strong connection', () => {
-    const outputs = new NodesOutputsTreeBuilder(outputsTree);
-    const inputs = new NodesInputsTreeBuilder(inputsTree, outputs);
+    manager.connect(
+      {
+        nodeId: 'a',
+        inputId: 'string',
+      },
+      {
+        nodeId: 'c',
+        outputId: 'string',
+      },
+    );
 
-    const manager = new NodesManager(inputs, outputs);
+    expect(inputs.value.nodes.d.inputs.string.value.value).toBe(undefined);
+  });
 
+  test('check to see if default validator works (type comparison)', () => {
+    manager.connect(
+      {
+        nodeId: 'a',
+        inputId: 'string',
+      },
+      {
+        nodeId: 'd',
+        outputId: 'number',
+      },
+    );
+
+    expect(inputs.value.nodes.d.inputs.string.value.value).toBe(undefined);
+  });
+
+  test('check to see if custom validator works', () => {
     manager.connect(
       {
         nodeId: 'a',

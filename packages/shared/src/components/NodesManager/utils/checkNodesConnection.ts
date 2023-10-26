@@ -2,6 +2,11 @@ import merge from 'lodash/merge';
 import { NodesInputsTreeBuilder } from '@/components/NodesInputsTreeBuilder';
 import { NodesOutputsTreeBuilder } from '@/components/NodesOutputsTreeBuilder';
 import checkStronglyConnected from './checkStronglyConnected';
+import {
+  NodeInputValidator,
+  NodesValidatorTreeBuilder,
+} from '@/components/NodesValidatorTreeBuilder';
+import { NodesPropertyTreeBuilder } from '@/components/NodesPropertyTreeBuilder';
 
 type ConnectNodesParams = {
   output: {
@@ -14,6 +19,8 @@ type ConnectNodesParams = {
   };
   inputTree: NodesInputsTreeBuilder;
   outputTree: NodesOutputsTreeBuilder;
+  validatorTree: NodesValidatorTreeBuilder;
+  propertyTree: NodesPropertyTreeBuilder;
 };
 
 const checkNodesConnection = ({
@@ -21,20 +28,39 @@ const checkNodesConnection = ({
   input,
   inputTree,
   outputTree,
+  validatorTree,
+  propertyTree,
 }: ConnectNodesParams) => {
   const { nodeId: outputNodeId, outputId } = output;
   const { nodeId: inputNodeId, inputId } = input;
 
-  const outputNode =
-    outputTree.value.nodes?.[outputNodeId]?.outputs?.[outputId];
-  const inputNode = inputTree.value.nodes?.[inputNodeId]?.inputs?.[inputId];
+  const outputNode = merge(
+    outputTree.value.nodes?.[outputNodeId],
+    propertyTree.value.nodes?.[outputNodeId],
+  );
 
-  if (!inputNode)
+  const inputNode = merge(
+    inputTree.value.nodes?.[inputNodeId],
+    merge(
+      propertyTree.value.nodes?.[inputNodeId],
+      validatorTree.value.nodes?.[inputNodeId],
+    ),
+  );
+
+  const inputSocket = inputNode?.inputs?.[inputId];
+  const outputSocket = outputNode?.outputs?.[outputId];
+
+  const defaultValidator: NodeInputValidator = ({ type }) =>
+    type === inputSocket?.type;
+
+  const validator = inputSocket.validator ?? defaultValidator;
+
+  if (!inputSocket)
     throw new Error(
       `The reference for the specified input ${inputId} in the node ${inputNodeId} was not found.`,
     );
 
-  if (!outputNode)
+  if (!outputSocket)
     throw new Error(
       `The reference for the specified output ${outputId} in the node ${outputNodeId} was not found.`,
     );
@@ -60,7 +86,7 @@ const checkNodesConnection = ({
     }),
   );
 
-  return isStronglyConnected;
+  return isStronglyConnected && validator(outputSocket);
 };
 
 export default checkNodesConnection;

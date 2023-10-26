@@ -1,6 +1,6 @@
 export {
-  type SerializedEditorPositionTree,
+  type InitialEditorPositionTree,
   type EditorPositionTree,
   EditorPositionTreeBuilder,
 } from './modules';
-export { deserializeEditorPositionTree } from './utils';
+export { setupEditorPositionTree } from './utils';

@@ -1,13 +1,13 @@
 import { Observable } from '@/components';
-import { deserializeNodesPositionTree } from '@/components/NodesPositionTreeBuilder';
+import { setupNodesPositionTree } from '@/components/NodesPositionTreeBuilder';
 
-export type SerializedNodePositionTree = Partial<{
+export type InitialNodePositionTree = Partial<{
   x: number;
   y: number;
 }>;
 
-export type SerializedNodesPositionTree = {
-  nodes: Record<string, SerializedNodePositionTree>;
+export type InitialNodesPositionTree = {
+  nodes: Record<string, InitialNodePositionTree>;
 };
 
 export type NodePositionTree = Partial<{
@@ -20,9 +20,9 @@ export type NodesPositionTree = {
 };
 
 export default class NodesPositionTreeBuilder<
-  T extends SerializedNodesPositionTree = SerializedNodesPositionTree,
+  T extends InitialNodesPositionTree = InitialNodesPositionTree,
 > extends Observable<NodesPositionTree> {
   constructor(tree: T) {
-    super(deserializeNodesPositionTree<T>(tree));
+    super(setupNodesPositionTree<T>(tree));
   }
 }
