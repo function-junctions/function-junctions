@@ -1,6 +1,6 @@
-import { Observable } from '@/modules';
-import { Output, InitialOutput } from '@/modules/Output';
-import { setupOutputTree } from '@/modules/NodesOutputsTreeBuilder';
+import { Observable } from '@/Observable';
+import { Output, InitialOutput } from '@/Output';
+import { setupOutputTree } from '@/NodesOutputsTreeBuilder';
 
 export type InitialNodeOutputsTree = {
   outputs: Record<string, InitialOutput<unknown>>;

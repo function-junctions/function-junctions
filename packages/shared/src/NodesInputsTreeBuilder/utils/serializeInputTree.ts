@@ -3,7 +3,7 @@ import merge from 'lodash/merge';
 import {
   InitialNodesInputsTree,
   NodesInputsTree,
-} from '@/modules/NodesInputsTreeBuilder';
+} from '@/NodesInputsTreeBuilder';
 
 const serializeInputTree = <T extends NodesInputsTree>({
   nodes: initialTree,

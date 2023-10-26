@@ -1,4 +1,4 @@
-import { Observable } from '@/modules';
+import { Observable } from '@/Observable';
 import { setupEditorPositionTree } from '@/EditorPositionTreeBuilder';
 
 export type InitialEditorPositionTree = {

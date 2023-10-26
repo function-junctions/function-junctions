@@ -2,20 +2,20 @@ import { beforeEach, describe, expect, test } from 'vitest';
 import {
   NodesInputsTreeBuilder,
   InitialNodesInputsTree,
-} from '@/modules/NodesInputsTreeBuilder';
+} from '@/NodesInputsTreeBuilder';
 import {
   NodesOutputsTreeBuilder,
   InitialNodesOutputsTree,
-} from '@/modules/NodesOutputsTreeBuilder';
+} from '@/NodesOutputsTreeBuilder';
 import NodesManager from './NodesManager';
 import {
   NodesPropertyTreeBuilder,
   InitialNodesPropertyTree,
-} from '@/modules/NodesPropertyTreeBuilder';
+} from '@/NodesPropertyTreeBuilder';
 import {
   NodesValidatorTreeBuilder,
   InitialNodesValidatorTree,
-} from '@/modules/NodesValidatorTreeBuilder';
+} from '@/NodesValidatorTreeBuilder';
 
 const outputsTree: InitialNodesOutputsTree = {
   nodes: {

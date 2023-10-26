@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest';
-import { InitialTree } from '@/modules/TreeBuilder';
+import { InitialTree } from '@/TreeBuilder';
 import Instance, {
   InputBlueprint,
   NodesBlueprint,
   OutputBlueprint,
 } from './Instance';
-import { NodeInputValidator } from '@/modules/NodesValidatorTreeBuilder';
+import { NodeInputValidator } from '@/NodesValidatorTreeBuilder';
 
 const numberOutput: OutputBlueprint = {
   type: 'number',

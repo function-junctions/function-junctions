@@ -2,7 +2,7 @@ import keys from 'lodash/keys';
 import {
   InitialNodesPositionTree,
   NodesPositionTree,
-} from '@/modules/NodesPositionTreeBuilder';
+} from '@/NodesPositionTreeBuilder';
 
 const setupNodesPositionTree = <T extends InitialNodesPositionTree>(
   initialTree: T,

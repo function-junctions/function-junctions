@@ -1,13 +1,13 @@
-import { NodesManager } from '@/modules/NodesManager';
-import { InitialIOPropertyTree } from '@/modules/NodesPropertyTreeBuilder';
-import { InitialOutput } from '@/modules/Output';
+import { NodesManager } from '@/NodesManager';
+import { InitialIOPropertyTree } from '@/NodesPropertyTreeBuilder';
+import { InitialOutput } from '@/Output';
 import {
   InitialTree,
   TreeBuilder,
   TreeBuilderKeys,
   InitialTreeWithBlueprintData,
-} from '@/modules/TreeBuilder';
-import { mergeBlueprintData } from '@/modules/Instance';
+} from '@/TreeBuilder';
+import { mergeBlueprintData } from '@/Instance';
 
 export type IOBlueprint = {
   type: string;

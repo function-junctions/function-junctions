@@ -1,9 +1,9 @@
-import { NodesInputsTreeBuilder } from '@/modules/NodesInputsTreeBuilder';
-import { NodesOutputsTreeBuilder } from '@/modules/NodesOutputsTreeBuilder';
-import { checkNodesConnection } from '@/modules/NodesManager';
-import { NodesValidatorTreeBuilder } from '@/modules/NodesValidatorTreeBuilder';
-import { NodesPropertyTreeBuilder } from '@/modules/NodesPropertyTreeBuilder';
-import { NodesBlueprint } from '@/modules/Instance';
+import { NodesInputsTreeBuilder } from '@/NodesInputsTreeBuilder';
+import { NodesOutputsTreeBuilder } from '@/NodesOutputsTreeBuilder';
+import { checkNodesConnection } from '@/NodesManager';
+import { NodesValidatorTreeBuilder } from '@/NodesValidatorTreeBuilder';
+import { NodesPropertyTreeBuilder } from '@/NodesPropertyTreeBuilder';
+import { NodesBlueprint } from '@/Instance';
 
 export type NodesManagerParams = {
   inputTree: NodesInputsTreeBuilder;
@@ -14,10 +14,10 @@ export type NodesManagerParams = {
 };
 
 export default class NodesManager {
-  public inputTree: NodesInputsTreeBuilder;
-  public outputTree: NodesOutputsTreeBuilder;
-  public validatorTree: NodesValidatorTreeBuilder;
-  public propertyTree: NodesPropertyTreeBuilder;
+  private inputTree: NodesInputsTreeBuilder;
+  private outputTree: NodesOutputsTreeBuilder;
+  private validatorTree: NodesValidatorTreeBuilder;
+  private propertyTree: NodesPropertyTreeBuilder;
   public blueprint: NodesBlueprint;
 
   constructor({

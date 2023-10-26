@@ -1,20 +1,20 @@
-import { UnifiedObservable } from '@/modules/Observable';
+import { UnifiedObservable } from '@/Observable';
 import {
   InitialNodesInputsTree,
   NodesInputsTreeBuilder,
   NodesInputsTree,
-} from '@/modules/NodesInputsTreeBuilder';
+} from '@/NodesInputsTreeBuilder';
 import {
   NodesOutputsTree,
   NodesOutputsTreeBuilder,
   InitialNodesOutputsTree,
-} from '@/modules/NodesOutputsTreeBuilder';
+} from '@/NodesOutputsTreeBuilder';
 import { DeepPartial, OneOfEach } from '@/types';
 import {
   NodesPropertyTree,
   NodesPropertyTreeBuilder,
   InitialNodesPropertyTree,
-} from '@/modules/NodesPropertyTreeBuilder';
+} from '@/NodesPropertyTreeBuilder';
 import {
   EditorPositionTree,
   EditorPositionTreeBuilder,
@@ -24,17 +24,17 @@ import {
   NodesPositionTree,
   NodesPositionTreeBuilder,
   InitialNodesPositionTree,
-} from '@/modules/NodesPositionTreeBuilder';
+} from '@/NodesPositionTreeBuilder';
 import {
   NodesComponentTree,
   NodesComponentTreeBuilder,
   InitialNodesComponentTree,
-} from '@/modules/NodesComponentTreeBuilder';
+} from '@/NodesComponentTreeBuilder';
 import {
   NodesValidatorTreeBuilder,
   InitialNodesValidatorTree,
   NodesValidatorTree,
-} from '@/modules/NodesValidatorTreeBuilder';
+} from '@/NodesValidatorTreeBuilder';
 
 export type InitialTree = InitialNodesOutputsTree &
   InitialNodesInputsTree &

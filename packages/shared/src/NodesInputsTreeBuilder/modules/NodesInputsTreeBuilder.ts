@@ -1,13 +1,10 @@
-import { Observable } from '@/modules';
-import { Input, InitialInput } from '@/modules/InputBuilder';
+import { Observable } from '@/Observable';
+import { Input, InitialInput } from '@/InputBuilder';
 import {
   NodesOutputsTreeBuilder,
   InitialNodesOutputsTree,
-} from '@/modules/NodesOutputsTreeBuilder';
-import {
-  setupInputTree,
-  serializeInputTree,
-} from '@/modules/NodesInputsTreeBuilder';
+} from '@/NodesOutputsTreeBuilder';
+import { setupInputTree, serializeInputTree } from '@/NodesInputsTreeBuilder';
 
 export type InitialNodeInputsTree = {
   inputs: Record<string, InitialInput>;

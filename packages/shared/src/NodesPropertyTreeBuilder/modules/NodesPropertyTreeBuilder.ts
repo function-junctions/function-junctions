@@ -1,5 +1,5 @@
-import { Observable } from '@/modules';
-import { setupNodesPropertyTree } from '@/modules/NodesPropertyTreeBuilder';
+import { Observable } from '@/Observable';
+import { setupNodesPropertyTree } from '@/NodesPropertyTreeBuilder';
 
 export type InitialIOPropertyTree = {
   type: string;

@@ -3,12 +3,12 @@ import merge from 'lodash/merge';
 import {
   NodesOutputsTreeBuilder,
   InitialNodesOutputsTree,
-} from '@/modules/NodesOutputsTreeBuilder';
+} from '@/NodesOutputsTreeBuilder';
 import {
   InitialNodesInputsTree,
   NodesInputsTree,
-} from '@/modules/NodesInputsTreeBuilder';
-import { InputBuilder } from '@/modules/InputBuilder';
+} from '@/NodesInputsTreeBuilder';
+import { InputBuilder } from '@/InputBuilder';
 
 const setupInputTree = <
   T extends InitialNodesInputsTree,

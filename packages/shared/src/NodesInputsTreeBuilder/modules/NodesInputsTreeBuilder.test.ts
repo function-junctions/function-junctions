@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { NodesOutputsTreeBuilder } from '@/modules/NodesOutputsTreeBuilder';
+import { NodesOutputsTreeBuilder } from '@/NodesOutputsTreeBuilder';
 import NodesInputsTreeBuilder from './NodesInputsTreeBuilder';
 
 const outputTree = {
