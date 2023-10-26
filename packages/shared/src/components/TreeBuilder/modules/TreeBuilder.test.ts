@@ -26,6 +26,10 @@ const initialTree: InitialTreeWithBlueprintData = {
           value: 'hello!',
         },
       },
+      store: {
+        val: 0,
+        val2: 'test',
+      },
     },
     b: {
       type: 'test',
@@ -45,6 +49,11 @@ const initialTree: InitialTreeWithBlueprintData = {
         test: {
           type: 'string',
           value: 'hello again!',
+        },
+      },
+      store: {
+        val: {
+          nested: 'test',
         },
       },
     },
@@ -182,6 +191,26 @@ describe('Tree Builder', () => {
         x: 0,
         y: 0,
       },
+    });
+  });
+
+  test('check to see if tree builder can load nodes store tree', () => {
+    const tree = new TreeBuilder(initialTree, {
+      additionalBuilders: ['nodesStore'],
+    });
+
+    const nodesStoreTree = tree.nodesStoreTree?.value;
+
+    expect({
+      aStore: tree.value.nodes.a.store,
+      aPTreeStore: nodesStoreTree?.nodes.a.store,
+      bStore: tree.value.nodes.b.store,
+      bPTreeStore: nodesStoreTree?.nodes.b.store,
+    }).toStrictEqual({
+      aStore: initialTree.nodes.a.store,
+      aPTreeStore: initialTree.nodes.a.store,
+      bStore: initialTree.nodes.b.store,
+      bPTreeStore: initialTree.nodes.b.store,
     });
   });
 });

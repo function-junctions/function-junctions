@@ -51,6 +51,10 @@ const initialTree: InitialTree = {
           value: 0,
         },
       },
+      store: {
+        val: 0,
+        val2: 'test',
+      },
     },
   },
 };
