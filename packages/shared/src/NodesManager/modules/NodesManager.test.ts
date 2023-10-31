@@ -7,7 +7,6 @@ import {
   NodesOutputsTreeBuilder,
   InitialNodesOutputsTree,
 } from '@shared/NodesOutputsTreeBuilder';
-import NodesManager from './NodesManager';
 import {
   NodesPropertyTreeBuilder,
   InitialNodesPropertyTree,
@@ -16,6 +15,7 @@ import {
   NodesValidatorTreeBuilder,
   InitialNodesValidatorTree,
 } from '@shared/NodesValidatorTreeBuilder';
+import NodesManager from './NodesManager';
 
 const outputsTree: InitialNodesOutputsTree = {
   nodes: {

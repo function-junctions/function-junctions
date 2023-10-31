@@ -4,7 +4,10 @@ import {
   NodesOutputsTreeBuilder,
   InitialNodesOutputsTree,
 } from '@shared/NodesOutputsTreeBuilder';
-import { setupInputTree, serializeInputTree } from '@shared/NodesInputsTreeBuilder';
+import {
+  setupInputTree,
+  serializeInputTree,
+} from '@shared/NodesInputsTreeBuilder';
 
 export type InitialNodeInputsTree = {
   inputs: Record<string, InitialInput>;
