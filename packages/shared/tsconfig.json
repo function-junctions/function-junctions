@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@shared/*": ["src/*"]
     },
   },
   "extends": "tsconfig/library.json",

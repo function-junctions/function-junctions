@@ -3,8 +3,8 @@ import {
   InitialNodesValidatorTree,
   NodesValidatorTree,
   NodeInputValidator,
-} from '@/NodesValidatorTreeBuilder';
-import { InitialNodesPropertyTree } from '@/NodesPropertyTreeBuilder';
+} from '@shared/NodesValidatorTreeBuilder';
+import { InitialNodesPropertyTree } from '@shared/NodesPropertyTreeBuilder';
 
 const setupNodesValidatorTree = <T extends InitialNodesValidatorTree>(
   initialTree: T,

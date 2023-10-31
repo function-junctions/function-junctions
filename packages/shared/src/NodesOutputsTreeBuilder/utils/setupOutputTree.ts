@@ -2,7 +2,7 @@ import keys from 'lodash/keys';
 import {
   InitialNodesOutputsTree,
   NodesOutputsTree,
-} from '@/NodesOutputsTreeBuilder';
+} from '@shared/NodesOutputsTreeBuilder';
 
 const setupOutputTree = <T extends InitialNodesOutputsTree>(
   initialTree: T,

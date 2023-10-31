@@ -1,5 +1,5 @@
-import { Observable } from '@/Observable';
-import { setupEditorPositionTree } from '@/EditorPositionTreeBuilder';
+import { Observable } from '@shared/Observable';
+import { setupEditorPositionTree } from '@shared/EditorPositionTreeBuilder';
 
 export type InitialEditorPositionTree = {
   editor?: {

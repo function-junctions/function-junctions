@@ -21,7 +21,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': resolve(resolve(), './src'),
+      '@react': resolve(resolve(), './src'),
+      '@shared': resolve(resolve(), '../shared/src'),
     },
   },
 });

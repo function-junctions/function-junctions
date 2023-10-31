@@ -20,7 +20,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': resolve(resolve(), './src'),
+      '@shared': resolve(resolve(), './src'),
     },
   },
   test: {

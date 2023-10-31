@@ -2,7 +2,7 @@ import keys from 'lodash/keys';
 import {
   InitialNodesComponentTree,
   NodesComponentTree,
-} from '@/NodesComponentTreeBuilder';
+} from '@shared/NodesComponentTreeBuilder';
 
 const setupNodesComponentTree = <T extends InitialNodesComponentTree>(
   initialTree: T,
