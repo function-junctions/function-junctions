@@ -1,40 +1,40 @@
-import { UnifiedObservable } from '@/Observable';
+import { UnifiedObservable } from '@shared/Observable';
 import {
   InitialNodesInputsTree,
   NodesInputsTreeBuilder,
   NodesInputsTree,
-} from '@/NodesInputsTreeBuilder';
+} from '@shared/NodesInputsTreeBuilder';
 import {
   NodesOutputsTree,
   NodesOutputsTreeBuilder,
   InitialNodesOutputsTree,
-} from '@/NodesOutputsTreeBuilder';
-import { DeepPartial, OneOfEach } from '@/types';
+} from '@shared/NodesOutputsTreeBuilder';
+import { DeepPartial, OneOfEach } from '@shared/types';
 import {
   NodesPropertyTree,
   NodesPropertyTreeBuilder,
   InitialNodesPropertyTree,
-} from '@/NodesPropertyTreeBuilder';
+} from '@shared/NodesPropertyTreeBuilder';
 import {
   EditorPositionTree,
   EditorPositionTreeBuilder,
   InitialEditorPositionTree,
-} from '@/EditorPositionTreeBuilder';
+} from '@shared/EditorPositionTreeBuilder';
 import {
   NodesPositionTree,
   NodesPositionTreeBuilder,
   InitialNodesPositionTree,
-} from '@/NodesPositionTreeBuilder';
+} from '@shared/NodesPositionTreeBuilder';
 import {
   NodesComponentTree,
   NodesComponentTreeBuilder,
   InitialNodesComponentTree,
-} from '@/NodesComponentTreeBuilder';
+} from '@shared/NodesComponentTreeBuilder';
 import {
   NodesValidatorTreeBuilder,
   InitialNodesValidatorTree,
   NodesValidatorTree,
-} from '@/NodesValidatorTreeBuilder';
+} from '@shared/NodesValidatorTreeBuilder';
 
 export type InitialTree = InitialNodesOutputsTree &
   InitialNodesInputsTree &

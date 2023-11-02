@@ -1,12 +1,12 @@
 import merge from 'lodash/merge';
-import { NodesInputsTreeBuilder } from '@/NodesInputsTreeBuilder';
-import { NodesOutputsTreeBuilder } from '@/NodesOutputsTreeBuilder';
-import checkStronglyConnected from './checkStronglyConnected';
+import { NodesInputsTreeBuilder } from '@shared/NodesInputsTreeBuilder';
+import { NodesOutputsTreeBuilder } from '@shared/NodesOutputsTreeBuilder';
 import {
   NodeInputValidator,
   NodesValidatorTreeBuilder,
-} from '@/NodesValidatorTreeBuilder';
-import { NodesPropertyTreeBuilder } from '@/NodesPropertyTreeBuilder';
+} from '@shared/NodesValidatorTreeBuilder';
+import { NodesPropertyTreeBuilder } from '@shared/NodesPropertyTreeBuilder';
+import checkStronglyConnected from './checkStronglyConnected';
 
 type ConnectNodesParams = {
   output: {

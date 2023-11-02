@@ -1,5 +1,5 @@
-import { Observable } from '@/Observable';
-import { setupNodesPositionTree } from '@/NodesPositionTreeBuilder';
+import { Observable } from '@shared/Observable';
+import { setupNodesPositionTree } from '@shared/NodesPositionTreeBuilder';
 
 export type InitialNodePositionTree = Partial<{
   x: number;

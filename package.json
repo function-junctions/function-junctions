@@ -12,9 +12,8 @@
     "postpack": "pinst --enable"
   },
   "devDependencies": {
-    "@turbo/gen": "^1.9.7",
+    "@turbo/gen": "^1.10.16",
     "eslint": "^8.47.0",
-    "next": "^13.4.19",
     "prettier": "^3.0.2",
     "prettier-plugin-custom": "*",
     "turbo": "latest",

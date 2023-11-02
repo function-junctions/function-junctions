@@ -1,5 +1,5 @@
-import { Observable } from '@/Observable';
-import { setupNodesComponentTree } from '@/NodesComponentTreeBuilder';
+import { Observable } from '@shared/Observable';
+import { setupNodesComponentTree } from '@shared/NodesComponentTreeBuilder';
 
 export type InitialNodeComponentTree<T = unknown> = {
   component: T;

@@ -1,10 +1,10 @@
-import { Observable } from '@/Observable';
+import { Observable } from '@shared/Observable';
 import {
   InitialIOPropertyTree,
   InitialNodesPropertyTree,
-} from '@/NodesPropertyTreeBuilder';
-import { setupNodesValidatorTree } from '@/NodesValidatorTreeBuilder';
-import { InitialOutput } from '@/Output';
+} from '@shared/NodesPropertyTreeBuilder';
+import { setupNodesValidatorTree } from '@shared/NodesValidatorTreeBuilder';
+import { InitialOutput } from '@shared/Output';
 
 export type NodeInputValidator = (
   incomingOutput: InitialOutput<unknown> & InitialIOPropertyTree,

@@ -1,7 +1,7 @@
 import {
   EditorPositionTree,
   InitialEditorPositionTree,
-} from '@/EditorPositionTreeBuilder';
+} from '@shared/EditorPositionTreeBuilder';
 
 const setupEditorPositionTree = <T extends InitialEditorPositionTree>(
   initialTree: T,

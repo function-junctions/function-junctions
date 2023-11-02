@@ -1,9 +1,9 @@
-import { NodesInputsTreeBuilder } from '@/NodesInputsTreeBuilder';
-import { NodesOutputsTreeBuilder } from '@/NodesOutputsTreeBuilder';
-import { checkNodesConnection } from '@/NodesManager';
-import { NodesValidatorTreeBuilder } from '@/NodesValidatorTreeBuilder';
-import { NodesPropertyTreeBuilder } from '@/NodesPropertyTreeBuilder';
-import { NodesBlueprint } from '@/Instance';
+import { NodesInputsTreeBuilder } from '@shared/NodesInputsTreeBuilder';
+import { NodesOutputsTreeBuilder } from '@shared/NodesOutputsTreeBuilder';
+import { checkNodesConnection } from '@shared/NodesManager';
+import { NodesValidatorTreeBuilder } from '@shared/NodesValidatorTreeBuilder';
+import { NodesPropertyTreeBuilder } from '@shared/NodesPropertyTreeBuilder';
+import { NodesBlueprint } from '@shared/Instance';
 
 export type NodesManagerParams = {
   inputTree: NodesInputsTreeBuilder;

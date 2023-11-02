@@ -1,6 +1,6 @@
 import isNil from 'lodash/isNil';
-import { Observable } from '@/Observable';
-import { NodesOutputsTree } from '@/NodesOutputsTreeBuilder';
+import { Observable } from '@shared/Observable';
+import { NodesOutputsTree } from '@shared/NodesOutputsTreeBuilder';
 
 export type InitialInputConnection = {
   nodeId: string;

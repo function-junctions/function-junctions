@@ -1,6 +1,6 @@
 import keys from 'lodash/keys';
 import isNil from 'lodash/isNil';
-import { InitialNodesInputsTree } from '@/NodesInputsTreeBuilder';
+import { InitialNodesInputsTree } from '@shared/NodesInputsTreeBuilder';
 
 type InitialNodesInputsTreeWithVisits = InitialNodesInputsTree & {
   nodes: Record<

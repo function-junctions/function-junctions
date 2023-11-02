@@ -1,8 +1,8 @@
 import merge from 'lodash/merge';
 import keys from 'lodash/keys';
-import { InitialTree, InitialTreeWithBlueprintData } from '@/TreeBuilder';
-import { NodesBlueprint } from '@/Instance';
-import { InitialNodeComponentTree } from '@/NodesComponentTreeBuilder';
+import { InitialTree, InitialTreeWithBlueprintData } from '@shared/TreeBuilder';
+import { NodesBlueprint } from '@shared/Instance';
+import { InitialNodeComponentTree } from '@shared/NodesComponentTreeBuilder';
 
 const mergeBlueprintData = (
   blueprint: NodesBlueprint,
