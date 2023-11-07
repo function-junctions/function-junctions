@@ -1,7 +1,10 @@
 import { Observable } from '@shared/Observable';
-import { useEffect, useState } from 'react';
+// eslint-disable-next-line object-curly-newline
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-const useObservable = <T>(observable: Observable<{ value: T }>) => {
+const useObservable = <T>(
+  observable: Observable<{ value: T }>,
+): [T, Dispatch<SetStateAction<T | undefined>>] => {
   const [value, setValue] = useState(observable.value.value);
   const [value$, setValue$] = useState<T>();
 
