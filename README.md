@@ -4,13 +4,13 @@
 
 <br />
 <h2>Introduction</h2>
-Function Junctions is a svelte library designed to give you the best experience
+Function Junctions is a React library designed to give you the best experience
 developing a node-based visual programming editor. With very minimal boiler-plate code,
 it seamlessly handles reactivity and state with very little performance overhead.
 
 <br />
 
-[To learn more visit our documentation...](https://www.notion.so/0c4b503abdf34d9cbf3b14a9b6869aa3?v=7f7204735ea046319417b01638e23fe4&pvs=4)
+[To learn more visit our documentation...](https://stellar-acrylic-da8.notion.site/0c4b503abdf34d9cbf3b14a9b6869aa3?v=7f7204735ea046319417b01638e23fe4&pvs=4)
 
 <br />
 
