@@ -1,10 +1,11 @@
 import { defineConfig } from 'vite';
+import { defineConfig as vitestDefineConfig, mergeConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import path, { resolve } from 'node:path';
 import dts from 'vite-plugin-dts';
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default mergeConfig(defineConfig({
   plugins: [
     react(),
     dts({
@@ -25,4 +26,10 @@ export default defineConfig({
       '@shared': resolve(resolve(), '../shared/src'),
     },
   },
-});
+}), vitestDefineConfig({
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './scripts/setupTest.js',
+  },
+}));
