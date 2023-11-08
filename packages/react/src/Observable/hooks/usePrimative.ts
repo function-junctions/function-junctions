@@ -2,7 +2,7 @@ import { Observable } from '@shared/Observable';
 // eslint-disable-next-line object-curly-newline
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-const useObservable = <T>(
+const usePrimative = <T extends string | number | symbol | boolean>(
   observable: Observable<{ value: T }>,
 ): [T, Dispatch<SetStateAction<T | undefined>>] => {
   const [value, setValue] = useState(observable.value.value);
@@ -25,4 +25,4 @@ const useObservable = <T>(
   return [value, setValue$];
 };
 
-export default useObservable;
+export default usePrimative;

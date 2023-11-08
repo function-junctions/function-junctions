@@ -1,23 +1,23 @@
 import { describe, expect, test } from 'vitest';
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import { Observable } from '@shared/Observable';
-import useObservable from './useObservable';
+import usePrimative from './usePrimative';
 
 const primative = 'hello!';
 
-describe('useObservable', () => {
-  test('Check to see if useObservable hook can be initalized', () => {
+describe('usePrimative', () => {
+  test('Check to see if usePrimative hook can be initalized', () => {
     const observable = new Observable({ value: primative });
-    const { result } = renderHook(() => useObservable(observable));
+    const { result } = renderHook(() => usePrimative(observable));
 
     const [value] = result.current;
 
     expect(value).toBe(primative);
   });
 
-  test('Check to see if useObservable value can be modified', () => {
+  test('Check to see if usePrimative value can be modified', () => {
     const observable = new Observable({ value: 'UNUPDATED VALUE' });
-    const { result } = renderHook(() => useObservable(observable));
+    const { result } = renderHook(() => usePrimative(observable));
 
     const [, setValue] = result.current;
 
