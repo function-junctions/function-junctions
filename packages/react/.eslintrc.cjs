@@ -1,10 +1,10 @@
 module.exports = {
   env: { browser: true, es2020: true },
   extends: [
-    'custom',
     'airbnb',
     'airbnb-typescript',
     'plugin:react-hooks/recommended',
+    'custom',
   ],
   parserOptions: {
     project: 'tsconfig.json',

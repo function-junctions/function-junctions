@@ -5,10 +5,11 @@ import {
   Instance,
   InitialTree,
 } from '@function-junctions/shared';
+import { ReactNode } from 'react';
 import EditorCanvas from './EditorCanvas';
 
 export type EditorProps = {
-  blueprint: NodesBlueprint;
+  blueprint: NodesBlueprint<ReactNode>;
   defaultTree?: InitialTree;
   permissions?: EditorPermissions;
 };

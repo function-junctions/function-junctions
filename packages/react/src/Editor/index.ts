@@ -1,1 +1,2 @@
-export { default as Editor, type EditorProps } from './Editor';
+export { Editor } from './components';
+export { checkEditorInstanceValid } from './utils';
