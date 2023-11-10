@@ -1,35 +1,13 @@
-import {
-  NodesBlueprint,
-  EditorPermissions,
-  permissionToLoader,
-  Instance,
-  InitialTree,
-} from '@function-junctions/shared';
-import { ReactNode } from 'react';
-import EditorCanvas from './EditorCanvas';
+import { StyledComponentProps } from '@react/StyledComponent';
+import EditorRoot from './EditorRoot';
+import EditorContent, { EditorContentProps } from './EditorContent';
 
-export type EditorProps = {
-  blueprint: NodesBlueprint<ReactNode>;
-  defaultTree?: InitialTree;
-  permissions?: EditorPermissions;
-};
+export type EditorProps = StyledComponentProps & EditorContentProps;
 
-export default function Editor({
-  blueprint,
-  defaultTree,
-  permissions,
-}: EditorProps) {
-  const loaders = permissionToLoader(
-    permissions ?? {
-      updateNodes: true,
-    },
+export default function Editor({ children, ...restProps }: EditorProps) {
+  return (
+    <EditorRoot {...restProps}>
+      <EditorContent {...restProps}>{children}</EditorContent>
+    </EditorRoot>
   );
-
-  const instance = new Instance({
-    blueprint,
-    tree: defaultTree,
-    additionalTreeBuilders: loaders,
-  });
-
-  return <EditorCanvas instance={instance} />;
 }

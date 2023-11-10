@@ -1,0 +1,16 @@
+{
+  "name": "@function-junctions/styles",
+  "version": "0.0.0",
+  "main": "build/index.css",
+  "license": "MIT",
+  "scripts": {
+    "dev": "sass --watch src/index.scss build/index.css",
+    "build": "sass index.scss build/index.css"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "sass": "^1.69.5"
+  }
+}

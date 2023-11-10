@@ -1,0 +1,24 @@
+.fj-editor {
+  overflow: hidden;
+  touch-action: none;
+
+  transform-origin: 0px 0px;
+
+  background-size: 20px 20px;
+  background-image: linear-gradient(to right, rgb(242, 242, 247) 1px, transparent 1px), linear-gradient(to bottom, rgb(242, 242, 247) 1px, transparent 1px);
+  background-color: white;
+
+  height: 100%;
+  width: 100%;
+
+  font-family: -apple-system, SF Pro Text, SF UI Text, system-ui, Helvetica Neue,
+    Helvetica, Arial, sans-serif;
+}
+
+.fj-dark {
+  &.fj-editor {
+    color: white;
+    background-image: linear-gradient(to right, #363636 1px, transparent 1px), linear-gradient(to bottom, #363636 1px, transparent 1px);
+    background-color: #272727;
+  }
+}

@@ -2,11 +2,11 @@ import { Instance } from '@function-junctions/shared';
 import { useRecord } from '@react/Observable';
 import { checkEditorInstanceValid } from '@react/Editor';
 
-export type EditorCanvasProps = {
+export type GridContentProps = {
   instance: Instance;
 };
 
-export default function EditorCanvas({ instance }: EditorCanvasProps) {
+export default function GridContent({ instance }: GridContentProps) {
   if (!checkEditorInstanceValid(instance))
     throw new Error('The editor instance passed in is invalid');
 
