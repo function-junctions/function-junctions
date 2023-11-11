@@ -29,7 +29,7 @@ export type NodeBlueprint<TComponent = unknown> = {
   component: TComponent;
 };
 
-export type NodesBlueprint = Record<string, NodeBlueprint>;
+export type NodesBlueprint<T = unknown> = Record<string, NodeBlueprint<T>>;
 
 export type InstanceParams<
   TBlueprint extends NodesBlueprint,

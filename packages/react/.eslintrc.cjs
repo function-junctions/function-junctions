@@ -1,10 +1,10 @@
 module.exports = {
   env: { browser: true, es2020: true },
   extends: [
-    'custom',
     'airbnb',
     'airbnb-typescript',
     'plugin:react-hooks/recommended',
+    'custom',
   ],
   parserOptions: {
     project: 'tsconfig.json',
@@ -19,6 +19,7 @@ module.exports = {
       { allowConstantExport: true },
     ],
     'react/react-in-jsx-scope': 'off',
-    'react/require-default-props': 'off'
+    'react/require-default-props': 'off',
+    'react/jsx-props-no-spreading': 'off'
   },
 }

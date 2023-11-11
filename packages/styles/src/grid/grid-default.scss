@@ -1,0 +1,13 @@
+.fj-grid {
+  user-select: none;
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  .fj-grid-zoom {
+    transform-box: fill-box;
+    user-select: none;
+    height: 100%;
+    width: 100%;
+  }
+}
