@@ -1,5 +1,9 @@
+import { Dispatch, SetStateAction } from 'react';
 import { InputConnection } from '@shared/InputBuilder';
-import { Dispatch, ReactElement, SetStateAction } from 'react';
+import NodeRoot from './NodeRoot';
+import NodeContent, { NodeContentProps } from './NodeContent';
+import NodeHeader from './NodeHeader';
+import NodeBody from './NodeBody';
 
 export type NodeIOProps<T = unknown> = {
   value: T;
@@ -23,9 +27,19 @@ export type NodeStoreProps<T extends NodeStore = NodeStore> = {
   setStore?: Dispatch<SetStateAction<T>>;
 };
 
-export type NodeProps = NodeStoreProps & {
+export type NodeDataProps = NodeStoreProps & {
   inputs?: NodeInputsProps;
   outputs?: NodeOutputsProps;
 };
 
-export type Node = (props: NodeProps) => ReactElement;
+export type NodeProps = NodeContentProps;
+
+export default function Node({ children, header, ...restProps }: NodeProps) {
+  return (
+    <NodeRoot {...restProps}>
+      <NodeContent header={<NodeHeader>{header}</NodeHeader>} {...restProps}>
+        <NodeBody>{children}</NodeBody>
+      </NodeContent>
+    </NodeRoot>
+  );
+}
