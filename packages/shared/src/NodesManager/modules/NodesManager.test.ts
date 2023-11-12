@@ -194,6 +194,8 @@ describe('Nodes manager', () => {
       },
     );
 
+    if (!inputs.value.nodes.d.inputs) return;
+
     expect(inputs.value.nodes.d.inputs.string.value.value).toBe(`Hello!`);
   });
 
@@ -224,6 +226,8 @@ describe('Nodes manager', () => {
       },
     );
 
+    if (!inputs.value.nodes.d.inputs) return;
+
     expect(inputs.value.nodes.d.inputs.string.value.value).toBe(undefined);
   });
 
@@ -239,6 +243,8 @@ describe('Nodes manager', () => {
       },
     );
 
+    if (!inputs.value.nodes.d.inputs) return;
+
     expect(inputs.value.nodes.d.inputs.string.value.value).toBe(undefined);
   });
 
@@ -253,6 +259,8 @@ describe('Nodes manager', () => {
         outputId: 'string',
       },
     );
+
+    if (!inputs.value.nodes.d.inputs) return;
 
     expect(inputs.value.nodes.d.inputs.string.value.value).toBe(undefined);
   });

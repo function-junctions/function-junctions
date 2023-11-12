@@ -1,6 +1,7 @@
 import keys from 'lodash/keys';
 import isNil from 'lodash/isNil';
 import { InitialNodesInputsTree } from '@shared/NodesInputsTreeBuilder';
+import { InitialInput } from '@shared/InputBuilder';
 
 type InitialNodesInputsTreeWithVisits = InitialNodesInputsTree & {
   nodes: Record<
@@ -20,9 +21,9 @@ const checkStronglyConnected = (
   const traverseInputTree = (entryNodeId: string) => {
     if (nodes[entryNodeId].visited) return false;
 
-    const inputs = keys(nodes[entryNodeId].inputs).map(
-      (inputKey) => nodes[entryNodeId].inputs[inputKey],
-    );
+    const inputs = keys(nodes[entryNodeId].inputs)
+      .map((inputKey) => nodes[entryNodeId].inputs?.[inputKey])
+      .filter((input): input is InitialInput => !!input);
 
     const mappedInputs = inputs
       .filter((input) => !!input)

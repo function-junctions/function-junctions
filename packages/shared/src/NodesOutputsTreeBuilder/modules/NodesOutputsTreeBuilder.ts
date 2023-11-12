@@ -3,7 +3,7 @@ import { Output, InitialOutput } from '@shared/Output';
 import { setupOutputTree } from '@shared/NodesOutputsTreeBuilder';
 
 export type InitialNodeOutputsTree = {
-  outputs: Record<string, InitialOutput<unknown>>;
+  outputs?: Record<string, InitialOutput<unknown>>;
 };
 
 export type InitialNodesOutputsTree = {
@@ -11,7 +11,7 @@ export type InitialNodesOutputsTree = {
 };
 
 export type NodeOutputsTree = {
-  outputs: Record<string, Output<unknown>>;
+  outputs?: Record<string, Output<unknown>>;
 };
 
 export type NodesOutputsTree = {

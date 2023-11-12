@@ -36,10 +36,13 @@
   }
 
   .fj-node-header {
-    position: absolute;
-    top: -30px;
-    right: 0px;
-    display: flex;
+    color: black;
+    font-weight: 400;
+    font-family: inherit;
+    font-size: 12px;
+    border-radius: 9px 9px 0 0;
+    padding: 10px;
+    overflow: hidden;
   }
 }
 
@@ -56,5 +59,9 @@
     background: #232323;
     border: 1px solid black;
     box-shadow: 4px 5px 9px rgb(0 0 0 / 50%);
+
+    .fj-node-header {
+      color: white;
+    }
   }
 }

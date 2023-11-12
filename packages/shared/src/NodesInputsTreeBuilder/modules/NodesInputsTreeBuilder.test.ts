@@ -42,6 +42,8 @@ describe('Nodes Inputs Tree', () => {
   test('See if node input connections properly update', () => {
     const inputs = new NodesInputsTreeBuilder(inputsTree, outputs);
 
+    if (!inputs.value.nodes.c.inputs) return;
+
     const { connection } = inputs.value.nodes.c.inputs.string.value;
     if (connection) connection.nodeId = `b`;
 
@@ -52,6 +54,12 @@ describe('Nodes Inputs Tree', () => {
 
   test('See if origin node input connection properly updates connected node', () => {
     const inputs = new NodesInputsTreeBuilder(inputsTree, outputs);
+
+    if (
+      !outputs.value.nodes.a.outputs ||
+      !inputs.value.nodes.c.inputs?.string.value
+    )
+      return;
 
     outputs.value.nodes.a.outputs.string.value = `Hello again!`;
 

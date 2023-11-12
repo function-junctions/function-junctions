@@ -56,9 +56,9 @@ export default class NodesManager {
       propertyTree: this.propertyTree,
     });
 
-    const inputNode = this.inputTree.value.nodes[inputNodeId].inputs[inputId];
+    const inputNode = this.inputTree.value.nodes[inputNodeId].inputs?.[inputId];
 
-    if (canConnect) {
+    if (canConnect && inputNode) {
       inputNode.value.connection = {
         outputId,
         nodeId: outputNodeId,

@@ -10,14 +10,14 @@ import {
 } from '@shared/NodesInputsTreeBuilder';
 
 export type InitialNodeInputsTree = {
-  inputs: Record<string, InitialInput>;
+  inputs?: Record<string, InitialInput>;
 };
 export type InitialNodesInputsTree = {
   nodes: Record<string, InitialNodeInputsTree>;
 };
 
 export type NodeInputsTree = {
-  inputs: Record<string, Observable<Input<unknown>>>;
+  inputs?: Record<string, Observable<Input<unknown>>>;
 };
 export type NodesInputsTree = {
   nodes: Record<string, NodeInputsTree>;

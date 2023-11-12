@@ -24,14 +24,18 @@ const setupInputTree = <
       const { inputs } = initialTree[nodeKey];
 
       const setupdInputs = keys(inputs).reduce((prevInput, inputKey) => {
-        const { connection } = inputs[inputKey];
+        const input = inputs?.[inputKey];
+
+        if (!input) return prevInput;
+
+        const { connection } = input;
 
         const initialOutputValue =
           tree.nodes?.[connection?.nodeId ?? '']?.outputs?.[
             connection?.outputId ?? ''
           ].value;
 
-        const input = new InputBuilder<typeof initialOutputValue>(
+        const inputBuilder = new InputBuilder<typeof initialOutputValue>(
           {
             connection,
             value: initialOutputValue,
@@ -39,7 +43,7 @@ const setupInputTree = <
           tree,
         );
 
-        return merge(prevInput, { [inputKey]: input });
+        return merge(prevInput, { [inputKey]: inputBuilder });
       }, {});
 
       return merge(prevInputsTree, {

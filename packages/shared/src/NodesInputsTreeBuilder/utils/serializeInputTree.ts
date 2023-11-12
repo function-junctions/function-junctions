@@ -14,7 +14,10 @@ const serializeInputTree = <T extends NodesInputsTree>({
     return merge(prevNodes, {
       [nodeKey]: {
         inputs: keys(inputs).reduce((prevInputs, inputKey) => {
-          const input = inputs[inputKey];
+          const input = inputs?.[inputKey];
+
+          if (!input) return prevInputs;
+
           return merge(prevInputs, {
             [inputKey]: {
               connection: input.value?.connection,

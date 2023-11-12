@@ -27,14 +27,16 @@ export type NodeStoreProps<T extends NodeStore = NodeStore> = {
   setStore?: Dispatch<SetStateAction<T>>;
 };
 
-export type NodeDataProps = NodeStoreProps & {
+export type NodeProps = NodeStoreProps & {
   inputs?: NodeInputsProps;
   outputs?: NodeOutputsProps;
 };
 
-export type NodeProps = NodeContentProps;
-
-export default function Node({ children, header, ...restProps }: NodeProps) {
+export default function Node({
+  children,
+  header,
+  ...restProps
+}: NodeProps & NodeContentProps) {
   return (
     <NodeRoot {...restProps}>
       <NodeContent header={<NodeHeader>{header}</NodeHeader>} {...restProps}>

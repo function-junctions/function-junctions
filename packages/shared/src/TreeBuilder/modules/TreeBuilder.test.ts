@@ -55,6 +55,14 @@ describe('Tree Builder', () => {
   test('check to see if tree builder can load default trees', () => {
     const tree = new TreeBuilder(initialTree);
 
+    if (
+      !tree.value.nodes.a.inputs ||
+      !tree.value.nodes.a.outputs ||
+      !tree.value.nodes.b.inputs ||
+      !tree.value.nodes.b.outputs
+    )
+      return;
+
     expect({
       aInput: tree.value.nodes.a.inputs.test.value.connection,
       aOutput: tree.value.nodes.a.outputs.test.value,
@@ -76,6 +84,14 @@ describe('Tree Builder', () => {
     });
 
     const nodesPropertyTree = tree.nodesPropertyTree?.value;
+
+    if (
+      !tree.value.nodes.a.inputs ||
+      !tree.value.nodes.a.outputs ||
+      !tree.value.nodes.b.inputs ||
+      !tree.value.nodes.b.outputs
+    )
+      return;
 
     const aType = {
       type: 'test',

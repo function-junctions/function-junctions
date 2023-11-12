@@ -4,10 +4,12 @@ import GridContent, { GridContentProps } from './GridContent';
 
 export type GridProps = StyledComponentProps & GridContentProps;
 
-export default function Grid({ children, ...restProps }: GridProps) {
+export default function Grid({ children, instance, ...restProps }: GridProps) {
   return (
     <GridRoot {...restProps}>
-      <GridContent {...restProps}>{children}</GridContent>
+      <GridContent instance={instance} {...restProps}>
+        {children}
+      </GridContent>
     </GridRoot>
   );
 }

@@ -15,7 +15,7 @@ export type InitialNodeValidatorTreeInput = {
 };
 
 export type InitialNodeValidatorTree = {
-  inputs: Record<string, InitialNodeValidatorTreeInput>;
+  inputs?: Record<string, InitialNodeValidatorTreeInput>;
 };
 
 export type InitialNodesValidatorTree = {

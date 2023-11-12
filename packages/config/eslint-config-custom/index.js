@@ -31,6 +31,14 @@ module.exports = {
     'import/no-cycle': 'off',
     'import/prefer-default-export': 'off',
     'operator-linebreak': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      { 
+        'argsIgnorePattern': '^_',
+        'varsIgnorePattern': '^_',
+        'caughtErrorsIgnorePattern': '^_'
+      }
+    ],
     'no-restricted-imports': [
       'error',
       {

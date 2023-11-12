@@ -14,7 +14,11 @@ const setupNodesValidatorTree = <T extends InitialNodesValidatorTree>(
     const { inputs } = initialTree.nodes[key];
 
     const inputProperties = keys(inputs).reduce((prevInputs, inputKey) => {
-      const { validator } = inputs[inputKey];
+      const input = inputs?.[inputKey];
+
+      if (!input) return prevInputs;
+
+      const { validator } = input;
       const defaultValidator: NodeInputValidator = (output) =>
         output.type === initialPropertyTree.nodes[key].inputs?.[inputKey].type;
 

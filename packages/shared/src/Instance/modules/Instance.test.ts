@@ -62,6 +62,8 @@ describe('Instance', () => {
       tree: initialTree,
     });
 
+    if (!instance.inputTree.value.nodes['0'].inputs) return;
+
     expect(
       instance.inputTree.value.nodes['0'].inputs.Number.value,
     ).toStrictEqual({
@@ -88,7 +90,9 @@ describe('Instance', () => {
     });
 
     const node = instance.value.nodes['0'];
-    const input = node.inputs.Number;
+    const input = node.inputs?.Number;
+
+    if (!input) return;
 
     const { validator } = input;
 

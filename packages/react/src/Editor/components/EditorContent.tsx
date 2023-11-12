@@ -1,17 +1,19 @@
 import {
-  NodesBlueprint,
   EditorPermissions,
   permissionToLoader,
   Instance,
   InitialTree,
 } from '@function-junctions/shared';
-import { ReactNode, useMemo } from 'react';
+import { useMemo } from 'react';
 import { Grid } from '@react/Grid';
+import { NodesBlueprint } from '@react/Instance';
+import { StyledComponentPropsAppearance } from '@react/StyledComponent';
 
 export type EditorContentProps = {
-  blueprint: NodesBlueprint<ReactNode>;
+  blueprint: NodesBlueprint;
   defaultTree?: InitialTree;
   permissions?: EditorPermissions;
+  appearance?: StyledComponentPropsAppearance;
 
   children?: typeof Grid;
 };
@@ -20,6 +22,7 @@ export default function EditorContent({
   blueprint,
   defaultTree,
   permissions,
+  appearance,
   children,
 }: EditorContentProps) {
   const loaders = useMemo(
@@ -42,5 +45,9 @@ export default function EditorContent({
     [blueprint, defaultTree, loaders],
   );
 
-  return children ? children({ instance }) : <Grid instance={instance} />;
+  return children ? (
+    children({ instance })
+  ) : (
+    <Grid appearance={appearance} instance={instance} />
+  );
 }

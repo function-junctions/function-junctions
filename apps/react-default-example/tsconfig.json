@@ -1,0 +1,14 @@
+{
+  "extends": "tsconfig/library.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@shared/*": ["../../packages/shared/src/*"],
+      "@react/*": ["../../packages/react/src/*"],
+    },
+    "jsx": "react-jsx",
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

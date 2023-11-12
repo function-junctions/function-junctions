@@ -33,7 +33,8 @@ const mergeBlueprintData = (
             [nodeKey]: {
               component: components[blueprintNodeKey],
               inputs: keys(inputs).reduce((prevInputs, inputKey) => {
-                const input = inputs[inputKey];
+                const input = inputs?.[inputKey];
+                if (!input) return prevInputs;
                 const inputBlueprint =
                   blueprint[blueprintNodeKey].inputBlueprints?.[input.type];
 
